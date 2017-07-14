@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
@@ -12,7 +11,7 @@ HOMEPAGE="https://developer.gnome.org/libwnck/stable/"
 
 LICENSE="LGPL-2+"
 SLOT="3"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-solaris ~x86-solaris"
+KEYWORDS="alpha amd64 arm ~arm64 ia64 ~mips ppc ppc64 ~sh sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-solaris ~x86-solaris"
 
 IUSE="+introspection startup-notification tools"
 
@@ -25,7 +24,6 @@ RDEPEND="
 	x11-libs/libXext
 	introspection? ( >=dev-libs/gobject-introspection-0.6.14:= )
 	startup-notification? ( >=x11-libs/startup-notification-0.4 )
-	x86-interix? ( sys-libs/itx-bind )
 "
 DEPEND="${RDEPEND}
 	dev-util/gtk-doc-am
@@ -37,12 +35,6 @@ DEPEND="${RDEPEND}
 #	gnome-base/gnome-common
 
 src_configure() {
-	if use x86-interix; then
-		# activate the itx-bind package...
-		append-flags "-I${EPREFIX}/usr/include/bind"
-		append-ldflags "-L${EPREFIX}/usr/lib/bind"
-	fi
-
 	# Don't collide with SLOT=1
 	gnome2_src_configure \
 		--disable-static \

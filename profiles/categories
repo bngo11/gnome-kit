@@ -30,11 +30,15 @@ net-im
 net-irc
 net-libs
 net-misc
+net-voip
 net-wireless
 sci-geosciences
 sys-apps
+sys-auth
+sys-fs
 sys-libs
 sys-power
+virtual
 www-client
 x11-libs
 x11-misc
