@@ -12,6 +12,7 @@ app-accessibility/brltty:speech - speech support
 app-accessibility/orca:braille - Enable braille support
 app-accessibility/speech-dispatcher:espeak - Adds support for espeak speech engine
 app-accessibility/speech-dispatcher:flite - Adds support for flite speech engine
+app-arch/file-roller:nautilus - Build contextual menu extension for gnome-base/nautilus.
 app-arch/file-roller:packagekit - Enable support for the distro-neutral package manager GUI app-admin/packagekit
 app-cdr/brasero:libburn - Enable dev-libs/libburn backend
 app-cdr/brasero:nautilus - Build the gnome-base/nautilus extension
