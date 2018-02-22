@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -17,7 +17,7 @@ LICENSE="LGPL-2+ BSD"
 SLOT="4/37" # soname version of libwebkit2gtk-4.0
 KEYWORDS="~alpha amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~x86-macos"
 
-IUSE="aqua coverage doc +egl +geolocation gles2 gnome-keyring +gstreamer +introspection +jit libnotify nsplugin +opengl spell wayland +webgl X"
+IUSE="aqua coverage doc +egl +geolocation gles2 gnome-keyring +gstreamer +introspection +jit libnotify nsplugin +opengl spell wayland +webgl +X"
 
 # webgl needs gstreamer, bug #560612
 REQUIRED_USE="
@@ -45,7 +45,7 @@ RDEPEND="
 	>=media-libs/fontconfig-2.8.0:1.0
 	>=media-libs/freetype-2.4.2:2
 	>=dev-libs/libgcrypt-1.6.0:0=
-	>=x11-libs/gtk+-3.20:3[aqua?,introspection?,wayland?,X?]
+	>=x11-libs/gtk+-3.22:3[aqua?,introspection?,wayland?,X?]
 	>=media-libs/harfbuzz-1.3.3:=[icu(+)]
 	>=dev-libs/icu-3.8.1-r1:=
 	virtual/jpeg:0=
