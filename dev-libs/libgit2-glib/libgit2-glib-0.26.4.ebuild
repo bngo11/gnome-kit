@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5,3_6} )
 VALA_USE_DEPEND="vapigen"
 
-inherit gnome2 python-r1 vala
+inherit gnome2 python-r1 vala meson
 
 DESCRIPTION="Git library for GLib"
 HOMEPAGE="https://wiki.gnome.org/Projects/Libgit2-glib"
@@ -39,14 +39,16 @@ src_prepare() {
 }
 
 src_configure() {
-	gnome2_src_configure \
-		$(use_enable python) \
-		$(use_enable ssh) \
-		$(use_enable vala)
+	local emesonargs=(
+	-D python=$(usex python true false)
+	-D ssh=$(usex ssh true  false)
+	-D vapi=$(usex vala true false)
+	)
+	meson_src_configure
 }
 
 src_install() {
-	gnome2_src_install
+	meson_src_install
 
 	if use python ; then
 		install_gi_override() {
