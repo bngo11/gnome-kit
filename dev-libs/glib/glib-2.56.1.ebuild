@@ -119,8 +119,7 @@ src_prepare() {
 	fi
 
 	# gdbus-codegen is a separate package
-	eapply "${FILESDIR}"/${PN}-2.54.3-external-gdbus-codegen.patch
-	eapply "${FILESDIR}"/${PN}-2.54.3-python.patch
+	eapply "${FILESDIR}"/${PN}-2.56.0-external-gdbus-codegen.patch
 
 	# Leave python shebang alone - handled by python_replicate_script
 	# We could call python_setup and give configure a valid --with-python

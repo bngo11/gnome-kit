@@ -1,31 +1,8 @@
 diff --git a/configure.ac b/configure.ac
-index a01e58d..59d4527 100644
+index 5dcdb79a7..5b297458d 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -367,14 +367,14 @@ AC_SUBST(PERL_PATH)
- # option to specify python interpreter to use; this just sets $PYTHON, so that
- # we will fallback to reading $PYTHON if --with-python is not given, and
- # python.m4 will get the expected input
--AC_ARG_WITH(python,
--            AS_HELP_STRING([--with-python=PATH],
--                           [Path to Python interpreter; searches $PATH if only a program name is given; if not given, searches for a few standard names such as "python3" or "python2"]),
--            [PYTHON="$withval"], [])
--if test x"$PYTHON" = xyes; then
--  AC_MSG_ERROR([--with-python option requires a path or program argument])
--fi
--AM_PATH_PYTHON(2.5,,PYTHON="/usr/bin/env python2.5")
-+# AC_ARG_WITH(python,
-+#             AS_HELP_STRING([--with-python=PATH],
-+#                            [Path to Python interpreter; searches $PATH if only a program name is given; if not given, searches for a few standard names such as "python3" or "python2"]),
-+#             [PYTHON="$withval"], [])
-+# if test x"$PYTHON" = xyes; then
-+#   AC_MSG_ERROR([--with-python option requires a path or program argument])
-+# fi
-+# AM_PATH_PYTHON(2.5,,PYTHON="/usr/bin/env python2.5")
- 
- 
- dnl ***********************
-@@ -3580,7 +3580,6 @@ gobject/glib-mkenums
+@@ -3566,7 +3566,6 @@ gobject/glib-mkenums
  gobject/tests/Makefile
  gthread/Makefile
  gio/Makefile
@@ -34,21 +11,19 @@ index a01e58d..59d4527 100644
  gio/gnetworking.h
  gio/xdgmime/Makefile
 diff --git a/docs/reference/gio/Makefile.am b/docs/reference/gio/Makefile.am
-index 47fdd38..c7eb136 100644
+index e04ab6843..3a518af02 100644
 --- a/docs/reference/gio/Makefile.am
 +++ b/docs/reference/gio/Makefile.am
-@@ -157,8 +157,7 @@ man_MANS +=			\
- 	glib-compile-resources.1	\
- 	gsettings.1		\
- 	gresource.1		\
--	gdbus.1			\
--	gdbus-codegen.1
-+	gdbus.1
+@@ -178,7 +178,6 @@ man_MANS +=				\
+ 	gsettings.1			\
+ 	gresource.1			\
+ 	gdbus.1				\
+-	gdbus-codegen.1			\
+ 	gio.1				\
+ 	$(NULL)
  
- XSLTPROC_FLAGS = \
-         --nonet \
 diff --git a/gio/Makefile.am b/gio/Makefile.am
-index e993e2f..025ad94 100644
+index e6b232649..1267de5ae 100644
 --- a/gio/Makefile.am
 +++ b/gio/Makefile.am
 @@ -1,6 +1,6 @@
@@ -60,10 +35,10 @@ index e993e2f..025ad94 100644
  if OS_UNIX
  SUBDIRS += xdgmime
 diff --git a/gio/tests/Makefile.am b/gio/tests/Makefile.am
-index 2c54e59..3cd3c5a 100644
+index 14cd928d2..2fd7a6e41 100644
 --- a/gio/tests/Makefile.am
 +++ b/gio/tests/Makefile.am
-@@ -437,10 +437,8 @@ gnotification_SOURCES                    = $(gdbus_sessionbus_sources) gnotifica
+@@ -483,10 +483,8 @@ gnotification_SOURCES                    = $(gdbus_sessionbus_sources) gnotifica
  
  BUILT_SOURCES += gdbus-test-codegen-generated.c gdbus-test-codegen-generated.h
  gdbus-test-codegen.o: gdbus-test-codegen-generated.h
@@ -77,7 +52,7 @@ index 2c54e59..3cd3c5a 100644
  		--generate-c-code gdbus-test-codegen-generated \
  		--c-generate-object-manager \
 diff --git a/gio/tests/gdbus-object-manager-example/Makefile.am b/gio/tests/gdbus-object-manager-example/Makefile.am
-index d6d1412..62ef706 100644
+index 1d0464c5c..b0ce60ca7 100644
 --- a/gio/tests/gdbus-object-manager-example/Makefile.am
 +++ b/gio/tests/gdbus-object-manager-example/Makefile.am
 @@ -11,10 +11,8 @@ GDBUS_GENERATED = \
