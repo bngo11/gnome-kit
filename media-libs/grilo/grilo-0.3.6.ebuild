@@ -1,9 +1,8 @@
-# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
+PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6,3_7} )
 VALA_MIN_API_VERSION="0.28"
 VALA_USE_DEPEND="vapigen"
 
@@ -14,7 +13,7 @@ HOMEPAGE="https://wiki.gnome.org/Projects/Grilo"
 
 LICENSE="LGPL-2.1+"
 SLOT="0.3/0" # subslot is libgrilo-0.3 soname suffix
-KEYWORDS="~alpha amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="*"
 
 IUSE="gtk examples +introspection +network playlist test vala"
 REQUIRED_USE="test? ( introspection )"
@@ -71,7 +70,8 @@ src_configure() {
 }
 
 src_test() {
-	virtx emake check
+	# /net/throttling/small-delay can fail with parallel tests
+	virtx emake -j1 check
 }
 
 src_install() {
