@@ -65,7 +65,7 @@ src_configure() {
 		-Ddeveloper_mode=false
 		-Ddistributor_name=Gentoo
 		-Dhttps_everywhere=false
-		-Dunit_tests=$(usex test true false)
+		$(meson_use test unit_tests)
 	)
 	meson_src_configure
 }

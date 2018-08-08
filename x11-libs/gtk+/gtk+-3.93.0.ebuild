@@ -143,7 +143,7 @@ multilib_src_configure() {
 		-D build-tests=$(usex test true false)
 		-D demos=$(usex examples true false)
 		-D install-tests=false
-		-D introspection=$(usex introspection true false)
+		-D introspection=$(multilib_native_usex introspection true false)
 		-D man-pages=true
 		-D libdir="${EPREFIX}"/usr/$(get_libdir)
 		-D CUPS_CONFIG="${EPREFIX}/usr/bin/${CHOST}-cups-config"

@@ -33,7 +33,7 @@ src_prepare() {
 
 multilib_src_configure() {
 	gnome-meson_src_configure \
-		$(meson_use introspection introspection) \
+		-Dintrospection=$(multilib_native_usex introspection true false) \
 		$(meson_use doc docs)
 }
 

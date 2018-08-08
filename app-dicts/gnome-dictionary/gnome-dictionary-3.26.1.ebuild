@@ -2,7 +2,7 @@
 
 EAPI="6"
 
-inherit gnome2 meson
+inherit gnome-meson
 
 DESCRIPTION="Dictionary utility for GNOME"
 HOMEPAGE="https://wiki.gnome.org/Apps/Dictionary"
@@ -34,9 +34,6 @@ DEPEND="${COMMON_DEPEND}
 "
 
 src_configure() {
-	local emesonargs=(
-		-Denable-ipv6=$(usex ipv6 true false)
-	)
-
-	meson_src_configure
+	gnome-meson_src_configure \
+		$(meson_use ipv6 enable-ipv6)
 }
