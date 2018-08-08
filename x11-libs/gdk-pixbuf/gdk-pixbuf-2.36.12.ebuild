@@ -44,7 +44,7 @@ MULTILIB_CHOST_TOOLS=(
 PATCHES=(
 	# Do not run lowmem test on uclibc
 	# See https://bugzilla.gnome.org/show_bug.cgi?id=756590
-	eapply "${FILESDIR}"/${PN}-2.32.3-fix-lowmem-uclibc.patch
+	"${FILESDIR}"/${PN}-2.32.3-fix-lowmem-uclibc.patch
 )
 
 src_prepare() {
