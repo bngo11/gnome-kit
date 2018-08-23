@@ -59,5 +59,5 @@ src_prepare() {
 src_configure() {
 	gnome-meson_src_configure \
 		-Dwith-manpage=true \
-		$(meson_use v4l with-cheese)
+		-Dwith-cheese=$(usex v4l yes no)
 }
