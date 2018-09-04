@@ -72,6 +72,9 @@ DEPEND="${CDEPEND}
 	nls? ( sys-devel/gettext )
 	unicode? ( app-i18n/unicode-data )"
 
+PATCHES=( "${FILESDIR}"/${P}-gdk-wayland.patch
+          "${FILESDIR}/${P}-conditional.patch" )
+
 src_prepare() {
 	vala_src_prepare --ignore-use
 	sed -i "/UCD_DIR=/s/\$with_emoji_annotation_dir/\$with_ucd_dir/" configure.ac
