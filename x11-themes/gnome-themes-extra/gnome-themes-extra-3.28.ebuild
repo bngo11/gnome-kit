@@ -17,6 +17,8 @@ IUSE=""
 # their default background image
 RDEPEND="
 	>=gnome-base/gsettings-desktop-schemas-3.4
+
+	!x11-themes/gnome-themes-standard
 "
 DEPEND="
 	>=dev-util/intltool-0.40
@@ -25,8 +27,6 @@ DEPEND="
 "
 
 PATCHES=(
-	# https://bugzilla.gnome.org/show_bug.cgi?id=746920
-	"${FILESDIR}"/${PN}-3.14.2.3-srcdir.patch
 	# Leave build of gtk+:2 engine to x11-themes/gtk-engines-adwaita
 	"${FILESDIR}"/${PN}-3.22.2-exclude-engine.patch
 )
