@@ -4,7 +4,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python2_7 )
-VALA_MIN_API_VERSION="0.16"
+VALA_MIN_API_VERSION="0.40"
 VALA_USE_DEPEND="vapigen"
 
 inherit gnome2 multibuild python-r1 vala
@@ -84,10 +84,10 @@ src_configure() {
 		$(use_enable introspection)
 		$(use_with pulseaudio)
 		$(use_with sasl)
+		$(use_enable vala)
 		--with-coroutine=gthread
 		--without-libview
 		--disable-static
-		--disable-vala
 	)
 
 	configure_python() {
