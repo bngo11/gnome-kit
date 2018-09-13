@@ -2,7 +2,7 @@
 
 EAPI="6"
 
-inherit gnome-meson
+inherit gnome-meson vala
 
 DESCRIPTION="Disk usage browser for GNOME"
 HOMEPAGE="https://wiki.gnome.org/Apps/Baobab"
