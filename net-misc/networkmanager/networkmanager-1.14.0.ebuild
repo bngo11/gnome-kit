@@ -155,7 +155,6 @@ src_prepare() {
 	DOC_CONTENTS="To modify system network connections without needing to enter the
 		root password, add your user account to the 'plugdev' group."
 
-	eautoreconf
 	use vala && vala_src_prepare
 	gnome2_src_prepare
 }
@@ -167,9 +166,6 @@ multilib_src_configure() {
 		--localstatedir=/var
 		--disable-lto
 		--disable-config-plugin-ibft
-		# ifnet plugin always disabled until someone volunteers to actively
-		# maintain and fix it
-		--disable-ifnet
 		--disable-qt
 		--without-netconfig
 		--with-dbus-sys-dir=/etc/dbus-1/system.d
