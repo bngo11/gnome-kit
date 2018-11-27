@@ -67,8 +67,8 @@ RDEPEND="
 	nsplugin? ( >=x11-libs/gtk+-2.24.10:2 )
 	spell? ( >=app-text/enchant-0.22:= )
 	gstreamer? (
-		>=media-libs/gstreamer-1.2.3:1.0
-		>=media-libs/gst-plugins-base-1.2.3:1.0
+		>=media-libs/gstreamer-1.14.1:1.0
+		>=media-libs/gst-plugins-base-1.14.1:1.0
 		>=media-libs/gst-plugins-bad-1.10:1.0[egl?,gles2?,opengl?] )
 
 	X? (
