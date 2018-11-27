@@ -1,11 +1,16 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
 
 inherit multilib
-KEYWORDS="~amd64 ~arm ~arm64 ~mips ~x86"
-SRC_URI="https://www.freedesktop.org/software/${PN}/${P}.tar.xz"
+if [[ ${PV} == "9999" ]] ; then
+	inherit git-r3 autotools
+	EGIT_REPO_URI="https://anongit.freedesktop.org/git/libqmi.git"
+else
+	KEYWORDS="amd64 ~arm ~arm64 ~mips x86"
+	SRC_URI="https://www.freedesktop.org/software/libqmi/${P}.tar.xz"
+fi
 
 DESCRIPTION="Qualcomm MSM (Mobile Station Modem) Interface (QMI) modem protocol helper library"
 HOMEPAGE="https://cgit.freedesktop.org/libqmi/"
