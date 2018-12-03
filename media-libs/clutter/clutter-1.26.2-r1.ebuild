@@ -1,4 +1,3 @@
-# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -18,7 +17,7 @@ REQUIRED_USE="
 	wayland? ( egl )
 "
 
-KEYWORDS="~alpha amd64 ~arm ~arm64 ~ia64 ~mips ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="*"
 
 # NOTE: glx flavour uses libdrm + >=mesa-7.3
 # >=libX11-1.3.1 needed for X Generic Event support
@@ -27,7 +26,7 @@ RDEPEND="
 	>=dev-libs/glib-2.44.0:2
 	>=dev-libs/atk-2.5.3[introspection?]
 	>=dev-libs/json-glib-0.12[introspection?]
-	>=media-libs/cogl-1.21.2:1.0=[introspection?,pango,wayland?]
+	>=media-libs/cogl-1.21.2:1.0=[introspection?,pango]
 	>=x11-libs/cairo-1.14:=[aqua?,glib]
 	>=x11-libs/pango-1.30[introspection?]
 
@@ -36,7 +35,7 @@ RDEPEND="
 
 	egl? (
 		>=dev-libs/libinput-0.19.0
-		media-libs/cogl[gles2,wayland]
+		media-libs/cogl[gles2]
 		>=virtual/libgudev-136
 		x11-libs/libxkbcommon
 	)
@@ -52,6 +51,7 @@ RDEPEND="
 		>=x11-libs/libXcomposite-0.4 )
 	wayland? (
 		dev-libs/wayland
+		media-libs/cogl[wayland]
 		x11-libs/gdk-pixbuf:2 )
 "
 DEPEND="${RDEPEND}

@@ -3,7 +3,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-inherit flag-o-matic gnome2 meson multilib virtualx multilib-minimal
+inherit flag-o-matic gnome2 meson virtualx
 
 DESCRIPTION="Gimp ToolKit +"
 HOMEPAGE="https://www.gtk.org/"
@@ -16,7 +16,7 @@ REQUIRED_USE="
 	xinerama? ( X )
 "
 
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux ~ppc-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="*"
 
 # Upstream wants us to do their job:
 # https://bugzilla.gnome.org/show_bug.cgi?id=768662#c1
@@ -25,39 +25,40 @@ RESTRICT="test"
 # FIXME: introspection data is built against system installation of gtk+:3,
 # bug #????
 COMMON_DEPEND="
-	>=dev-libs/atk-2.15.1[introspection?,${MULTILIB_USEDEP}]
-	>=media-libs/graphene-1.8.0[introspection?,${MULTILIB_USEDEP}]
-	>=dev-libs/glib-2.53.7:2[${MULTILIB_USEDEP}]
-	media-libs/fontconfig[${MULTILIB_USEDEP}]
-	>=media-libs/libepoxy-1.4[X(+)?,${MULTILIB_USEDEP}]
-	>=x11-libs/cairo-1.14[aqua?,glib,svg,X?,${MULTILIB_USEDEP}]
-	>=x11-libs/gdk-pixbuf-2.30:2[introspection?,${MULTILIB_USEDEP}]
-	>=x11-libs/pango-1.37.3[introspection?,${MULTILIB_USEDEP}]
+	app-text/enchant
+	>=dev-libs/atk-2.15.1[introspection?]
+	>=media-libs/graphene-1.8.0[introspection?]
+	>=dev-libs/glib-2.53.7:2
+	media-libs/fontconfig
+	>=media-libs/libepoxy-1.4[X(+)?]
+	>=x11-libs/cairo-1.14[aqua?,glib,svg,X?]
+	>=x11-libs/gdk-pixbuf-2.30:2[introspection?]
+	>=x11-libs/pango-1.37.3[introspection?]
 	x11-misc/shared-mime-info
 
 	cloudprint? (
-		>=net-libs/rest-0.7[${MULTILIB_USEDEP}]
-		>=dev-libs/json-glib-1.0[${MULTILIB_USEDEP}] )
-	colord? ( >=x11-misc/colord-0.1.9:0=[${MULTILIB_USEDEP}] )
-	cups? ( >=net-print/cups-1.2[${MULTILIB_USEDEP}] )
+		>=net-libs/rest-0.7
+		>=dev-libs/json-glib-1.0 )
+	colord? ( >=x11-misc/colord-0.1.9:0= )
+	cups? ( >=net-print/cups-1.2 )
 	introspection? ( >=dev-libs/gobject-introspection-1.39:= )
 	wayland? (
-		>=dev-libs/wayland-1.14.91[${MULTILIB_USEDEP}]
+		>=dev-libs/wayland-1.14.91
 		>=dev-libs/wayland-protocols-1.16
-		media-libs/mesa[wayland,${MULTILIB_USEDEP}]
-		>=x11-libs/libxkbcommon-0.2[${MULTILIB_USEDEP}]
+		media-libs/mesa[wayland]
+		>=x11-libs/libxkbcommon-0.2
 	)
 	X? (
-		>=app-accessibility/at-spi2-atk-2.5.3[${MULTILIB_USEDEP}]
-		x11-libs/libX11[${MULTILIB_USEDEP}]
-		>=x11-libs/libXi-1.3[${MULTILIB_USEDEP}]
-		x11-libs/libXext[${MULTILIB_USEDEP}]
-		>=x11-libs/libXrandr-1.5[${MULTILIB_USEDEP}]
-		x11-libs/libXcursor[${MULTILIB_USEDEP}]
-		x11-libs/libXfixes[${MULTILIB_USEDEP}]
-		x11-libs/libXcomposite[${MULTILIB_USEDEP}]
-		x11-libs/libXdamage[${MULTILIB_USEDEP}]
-		xinerama? ( x11-libs/libXinerama[${MULTILIB_USEDEP}] )
+		>=app-accessibility/at-spi2-atk-2.5.3
+		x11-libs/libX11
+		>=x11-libs/libXi-1.3
+		x11-libs/libXext
+		>=x11-libs/libXrandr-1.5
+		x11-libs/libXcursor
+		x11-libs/libXfixes
+		x11-libs/libXcomposite
+		x11-libs/libXdamage
+		xinerama? ( x11-libs/libXinerama )
 	)
 "
 DEPEND="${COMMON_DEPEND}
@@ -67,14 +68,14 @@ DEPEND="${COMMON_DEPEND}
 	dev-libs/gobject-introspection-common
 	>=dev-util/gdbus-codegen-2.48
 	>=dev-util/gtk-doc-am-1.20
-	>=sys-devel/gettext-0.19.7[${MULTILIB_USEDEP}]
-	virtual/pkgconfig[${MULTILIB_USEDEP}]
+	>=sys-devel/gettext-0.19.7
+	virtual/pkgconfig
 	X? (
-		x11-proto/xextproto[${MULTILIB_USEDEP}]
-		x11-proto/xproto[${MULTILIB_USEDEP}]
-		x11-proto/inputproto[${MULTILIB_USEDEP}]
-		x11-proto/damageproto[${MULTILIB_USEDEP}]
-		xinerama? ( x11-proto/xineramaproto[${MULTILIB_USEDEP}] )
+		x11-proto/xextproto
+		x11-proto/xproto
+		x11-proto/inputproto
+		x11-proto/damageproto
+		xinerama? ( x11-proto/xineramaproto )
 	)
 	test? (
 		media-fonts/font-misc-misc
@@ -89,7 +90,7 @@ RDEPEND="${COMMON_DEPEND}
 "
 # librsvg for svg icons (PDEPEND to avoid circular dep), bug #547710
 PDEPEND="
-	gnome-base/librsvg[${MULTILIB_USEDEP}]
+	gnome-base/librsvg
 	>=x11-themes/adwaita-icon-theme-3.14
 	vim-syntax? ( app-vim/gtk-syntax )
 "
@@ -109,36 +110,28 @@ src_prepare() {
 	gnome2_src_prepare
 }
 
-multilib_src_configure() {
-	# Not sure how to handle
-	#	$(use_enable X xcomposite) \
-	#	$(use_enable X xdamage) \
-	#	$(use_enable X xfixes) \
-	#	$(use_enable X xkb) \
-	#	$(use_enable X xrandr) \
-	#	--with-xml-catalog="${EPREFIX}"/etc/xml/catalog \
-
+src_configure() {
 	local emesonargs=(
-		-Denable-quartz-backend=$(usex aqua true false)
-		-Denable-broadway-backend=$(usex broadway true false)
-		-Denable-cloudprint-print-backend=$(usex cloudprint yes no)
-		-Denable-colord=$(usex colord yes no)
-		-Denable-cups-print-backend=$(usex cups yes no)
-		-Denable-wayland-backend=$(usex wayland true false)
-		-Denable-x11-backend=$(usex X true false)
-		-Denable-vulkan=$(usex vulkan yes no)
-		-Denable-xinerama=$(usex xinerama yes no)
+		-Dquartz-backend=$(usex aqua true false)
+		-Dbroadway-backend=$(usex broadway true false)
+		-Dcloudprint-print-backend=$(usex cloudprint yes no)
+		-Dcolord=$(usex colord yes no)
+		-Dcups-print-backend=$(usex cups yes no)
+		-Dwayland-backend=$(usex wayland true false)
+		-Dx11-backend=$(usex X true false)
+		-Dvulkan=$(usex vulkan yes no)
+		-Dxinerama=$(usex xinerama yes no)
 		-Ddocumentation=$(usex docs true false)
-		-Denable-cloudproviders=false
-		-Denable-mir-backend=false
-		-Denable-win32-backend=false
-		-Ddisable-modules=false
-		-Denable-test-print-backend=no
-		-Denable-papi-print-backend=no
+		-Dcloudproviders=false
+		-Dmir-backend=false
+		-Dwin32-backend=false
+		-Dmodules=false
+		-Dtest-print-backend=no
+		-Dpapi-print-backend=no
 		-Dbuild-tests=$(usex test true false)
 		-Ddemos=$(usex examples true false)
 		-Dinstall-tests=false
-		-Dintrospection=$(multilib_native_usex introspection true false)
+		-Dintrospection=$(usex introspection true false)
 		-Dman-pages=true
 		-DCUPS_CONFIG="${EPREFIX}/usr/bin/${CHOST}-cups-config"
 	)
@@ -146,12 +139,12 @@ multilib_src_configure() {
 	meson_src_configure
 }
 
-multilib_src_test() {
+src_test() {
 	"${EROOT}${GLIB_COMPILE_SCHEMAS}" --allow-any-name "${S}/gtk" || die
 	GSETTINGS_SCHEMA_DIR="${S}/gtk" virtx emake check
 }
 
-multilib_src_compile() {
+src_compile() {
 	meson_src_compile
 
 	sed -i -e "s/\(\"\)\/.*gsk\//\1/" gsk/gskenumtypes.h
@@ -159,11 +152,8 @@ multilib_src_compile() {
 	sed -i -e "s/\(\"\)\/.*gtk\//\1/" gtk/gtktypebuiltins.h
 }
 
-multilib_src_install() {
+src_install() {
 	meson_src_install
-}
-
-multilib_src_install_all() {
 	insinto /etc/gtk-4.0
 	doins "${FILESDIR}"/settings.ini
 	# Skip README.{in,commits,win32} and useless ChangeLog that would get installed by default
@@ -174,17 +164,14 @@ multilib_src_install_all() {
 pkg_preinst() {
 	gnome2_pkg_preinst
 
-	multilib_pkg_preinst() {
-		# Make immodules.cache belongs to gtk+ alone
-		local cache="usr/$(get_libdir)/gtk-4.0/4.0.0/immodules.cache"
+	# Make immodules.cache belongs to gtk+ alone
+	local cache="usr/$(get_libdir)/gtk-4.0/4.0.0/immodules.cache"
 
-		if [[ -e ${EROOT}${cache} ]]; then
-			cp "${EROOT}"${cache} "${ED}"/${cache} || die
-		else
-			touch "${ED}"/${cache} || die
-		fi
-	}
-	multilib_parallel_foreach_abi multilib_pkg_preinst
+	if [[ -e ${EROOT}${cache} ]]; then
+		cp "${EROOT}"${cache} "${ED}"/${cache} || die
+	else
+		touch "${ED}"/${cache} || die
+	fi
 }
 
 pkg_postinst() {
@@ -201,9 +188,6 @@ pkg_postrm() {
 	gnome2_pkg_postrm
 
 	if [[ -z ${REPLACED_BY_VERSION} ]]; then
-		multilib_pkg_postrm() {
-			rm -f "${EROOT}"usr/$(get_libdir)/gtk-4.0/4.0.0/immodules.cache
-		}
-		multilib_foreach_abi multilib_pkg_postrm
+		rm -f "${EROOT}"usr/$(get_libdir)/gtk-4.0/4.0.0/immodules.cache
 	fi
 }
