@@ -1,8 +1,7 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
-GCONF_DEBUG="no"
+EAPI=6
 
 inherit gnome2 multilib-minimal
 
@@ -15,7 +14,7 @@ KEYWORDS="alpha amd64 arm ~arm64 hppa ia64 ppc ppc64 ~sh sparc x86 ~x86-fbsd ~am
 IUSE="doc"
 
 COMMON_DEPEND="
-	>=dev-cpp/glibmm-2.46.2:2[doc?,${MULTILIB_USEDEP}]
+	>=dev-cpp/glibmm-2.58.0:2[doc?,${MULTILIB_USEDEP}]
 	>=dev-libs/atk-2.18.0[${MULTILIB_USEDEP}]
 	>=dev-libs/libsigc++-2.3.2:2[${MULTILIB_USEDEP}]
 "
