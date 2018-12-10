@@ -63,6 +63,7 @@ DEPEND="${RDEPEND}
 PATCHES=(
 	# Fix build with USE=-jingle, bug #523230
 	"${FILESDIR}"/${P}-build-fix-no-jingle.patch
+	"${FILESDIR}"/${P}-openssl-1.1.patch
 )
 
 pkg_setup() {
