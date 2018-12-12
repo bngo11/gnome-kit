@@ -25,6 +25,11 @@ DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 "
 
+pkg_setup() {
+	export CFLAGS="-std=c++17 $CFLAGS"
+	export CXXFLAGS="-std=c++17 $CXXFLAGS"
+}
+
 multilib_src_configure() {
 	ECONF_SOURCE="${S}" gnome2_src_configure \
 		$(multilib_native_use_enable doc documentation)
