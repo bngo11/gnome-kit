@@ -9,7 +9,7 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Seahorse"
 
 LICENSE="GPL-2+ FDL-1.1+"
 SLOT="0"
-IUSE="keyserver ldap zeroconf"
+IUSE="+keyserver ldap zeroconf"
 KEYWORDS="~alpha amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 
 COMMON_DEPEND="
