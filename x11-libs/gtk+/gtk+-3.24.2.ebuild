@@ -98,6 +98,8 @@ MULTILIB_CHOST_TOOLS=(
 	/usr/bin/gtk-query-immodules-3.0$(get_exeext)
 )
 
+PATCHES=( "${FILESDIR}/${P}-typo.patch" )
+
 strip_builddir() {
 	local rule=$1
 	shift
