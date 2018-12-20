@@ -1,0 +1,142 @@
+--- a/meson.build	2018-12-18 08:51:14.000000000 -0600
++++ b/meson.build	2018-12-20 11:07:36.899810738 -0600
+@@ -1873,9 +1873,9 @@
+   glib_conf.set('HAVE_STRLCPY', 1)
+ endif
+ 
+-python = import('python').find_installation('python3')
++python = import('python').find_installation('python')
+ # used for '#!/usr/bin/env <name>'
+-python_name = 'python3'
++python_name = 'python'
+ 
+ # Determine which user environment-dependent files that we want to install
+ have_bash = find_program('bash', required : false).found() # For completion scripts
+
+--- a/gio/meson.build	2018-12-18 08:51:13.000000000 -0600
++++ b/gio/meson.build	2018-12-20 11:12:53.416354328 -0600
+@@ -231,16 +231,14 @@
+   'gtestdbus.c',
+ )
+ 
+-# Generate gdbus-codegen
+-subdir('gdbus-2.0/codegen')
++gdbus_codegen = find_program('gdbus-codegen', required: true)
+ 
+ # Generate xdp-dbus.{c,h}
+ xdp_dbus_generated = custom_target('xdp-dbus',
+     input : ['org.freedesktop.portal.Documents.xml',
+              'org.freedesktop.portal.OpenURI.xml',
+              'org.freedesktop.portal.ProxyResolver.xml'],
+     output : ['xdp-dbus.h', 'xdp-dbus.c'],
+-    depend_files : gdbus_codegen_built_files,
+     command : [python, gdbus_codegen,
+                '--interface-prefix', 'org.freedesktop.portal.',
+                '--output-directory', '@OUTDIR@',
+@@ -260,7 +257,6 @@
+ gdbus_daemon_generated = custom_target('gdbus-daemon-generated',
+     input : ['dbus-daemon.xml'],
+     output : ['gdbus-daemon-generated.h', 'gdbus-daemon-generated.c'],
+-    depend_files : gdbus_codegen_built_files,
+     command : [python, gdbus_codegen,
+                '--interface-prefix', 'org.',
+                '--output-directory', '@OUTDIR@',
+
+--- a/docs/reference/gio/meson.build	2018-12-18 08:51:13.000000000 -0600
++++ b/docs/reference/gio/meson.build	2018-12-20 11:16:53.120773084 -0600
+@@ -204,7 +204,6 @@
+       'gsettings.xml',
+       'gresource.xml',
+       'gdbus.xml',
+-      'gdbus-codegen.xml',
+     ],
+     expand_content_files : [
+       'overview.xml',
+@@ -212,7 +211,6 @@
+       'migrating-gnome-vfs.xml',
+       'migrating-gconf.xml',
+       'migrating-gdbus.xml',
+-      'gdbus-codegen.xml',
+     ],
+     html_assets : [
+       'gvfs-overview.png',
+@@ -232,7 +230,7 @@
+ if get_option('man')
+   manpages = ['gapplication', 'gio-querymodules', 'glib-compile-schemas',
+               'glib-compile-resources', 'gsettings', 'gresource', 'gdbus',
+-              'gio', 'gdbus-codegen']
++              'gio']
+   foreach page : manpages
+     custom_target(page + '-man',
+       input: page + '.xml',
+
+--- a/gio/tests/meson.build	2018-12-18 08:51:13.000000000 -0600
++++ b/gio/tests/meson.build	2018-12-20 11:35:30.978114386 -0600
+@@ -184,43 +184,6 @@
+       '--annotate', 'org.project.Bar.TestPrimitiveTypes()[ret_uint32]', 'Key7', 'Value7',
+       '--annotate', 'org.project.Bar::TestSignal[array_of_strings]', 'Key8', 'Value8',
+     ]
+-    # Generate gdbus-test-codegen-generated.{c,h}
+-    gdbus_test_codegen_generated = custom_target('gdbus-test-codegen-generated',
+-        input :   ['test-codegen.xml'],
+-        output :  ['gdbus-test-codegen-generated.h',
+-                   'gdbus-test-codegen-generated.c'],
+-        depend_files : gdbus_codegen_built_files,
+-        command : [python, gdbus_codegen,
+-                   '--interface-prefix', 'org.project.',
+-                   '--output-directory', '@OUTDIR@',
+-                   '--generate-c-code', 'gdbus-test-codegen-generated',
+-                   '--c-generate-object-manager',
+-                   '--c-generate-autocleanup', 'all',
+-                   '--c-namespace', 'Foo_iGen',
+-                   '--generate-docbook', 'gdbus-test-codegen-generated-doc',
+-                   annotate_args,
+-                   '@INPUT@'])
+-
+-    gdbus_test_codegen_generated_interface_info = [
+-      custom_target('gdbus-test-codegen-generated-interface-info-h',
+-          input :   ['test-codegen.xml'],
+-          output :  ['gdbus-test-codegen-generated-interface-info.h'],
+-          depend_files : gdbus_codegen_built_files,
+-          command : [python, gdbus_codegen,
+-                     '--interface-info-header',
+-                     annotate_args,
+-                     '--output', '@OUTPUT@',
+-                     '@INPUT@']),
+-      custom_target('gdbus-test-codegen-generated-interface-info-c',
+-          input :   ['test-codegen.xml'],
+-          output :  ['gdbus-test-codegen-generated-interface-info.c'],
+-          depend_files : gdbus_codegen_built_files,
+-          command : [python, gdbus_codegen,
+-                     '--interface-info-body',
+-                     annotate_args,
+-                     '--output', '@OUTPUT@',
+-                     '@INPUT@']),
+-    ]
+ 
+     extra_sources = ['gdbus-sessionbus.c', 'gdbus-tests.c']
+ 
+@@ -248,10 +211,6 @@
+         'extra_sources' : extra_sources,
+         'dependencies' : [dbus1_dep],
+       },
+-      'gdbus-proxy-well-known-name' : {'extra_sources' : extra_sources},
+-      'gdbus-test-codegen' : {
+-        'extra_sources' : [extra_sources, gdbus_test_codegen_generated, gdbus_test_codegen_generated_interface_info],
+-      },
+       'gdbus-threading' : {
+         'extra_sources' : extra_sources,
+         'suite' : ['slow'],
+@@ -263,12 +222,6 @@
+       'gnotification' : {
+         'extra_sources' : [extra_sources, 'gnotification-server.c'],
+       },
+-      'gdbus-test-codegen-old' : {
+-        'source' : 'gdbus-test-codegen.c',
+-        'extra_sources' : [extra_sources, gdbus_test_codegen_generated, gdbus_test_codegen_generated_interface_info],
+-        'c_args' : ['-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_36',
+-                    '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_36'],
+-      },
+       'gapplication' : {'extra_sources' : extra_sources},
+       'gdbus-unix-addresses' : {},
+     }]
