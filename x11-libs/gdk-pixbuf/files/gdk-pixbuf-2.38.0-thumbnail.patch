@@ -1,0 +1,19 @@
+diff --git a/thumbnailer/gdk-pixbuf-thumbnailer.c b/thumbnailer/gdk-pixbuf-thumbnailer.c
+index d50ede8ee70bdd733c6f896e5eb045d0d42f1537..8308ecaf751292837dde486ab1e99e74d4ec0dc0 100644
+--- a/thumbnailer/gdk-pixbuf-thumbnailer.c
++++ b/thumbnailer/gdk-pixbuf-thumbnailer.c
+@@ -36,6 +36,14 @@ file_to_pixbuf (const char  *path,
+ 	if (pixbuf == NULL)
+ 		return NULL;
+ 
++	/* The GIF codec throws GDK_PIXBUF_ERROR_INCOMPLETE_ANIMATION
++	 * if it's closed without decoding all the frames. Since
++	 * gdk_pixbuf_new_from_file_at_size only decodes the first
++	 * frame, this specific error needs to be ignored.
++	 */
++	if (error != NULL && g_error_matches (*error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_INCOMPLETE_ANIMATION))
++		g_clear_error (error);
++
+ 	tmp_pixbuf = gdk_pixbuf_apply_embedded_orientation (pixbuf);
+ 	gdk_pixbuf_copy_options (pixbuf, tmp_pixbuf);
+ 	gdk_pixbuf_remove_option (tmp_pixbuf, "orientation");

@@ -45,6 +45,7 @@ PATCHES=(
 	# See https://bugzilla.gnome.org/show_bug.cgi?id=756590
 	"${FILESDIR}"/${PN}-2.32.3-fix-lowmem-uclibc.patch
 	"${FILESDIR}"/${P}-enum.patch
+	"${FILESDIR}"/${P}-thumbnail.patch
 )
 
 src_prepare() {
