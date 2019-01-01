@@ -112,7 +112,7 @@ pkg_setup() {
 
 src_configure() {
 	gnome-meson_src_configure \
-		-Dudev_dir="$(get_udevdir)"/rules.d \
+		-Dudev_dir="$(get_udevdir)" \
 		$(meson_use udev gudev) \
 		$(meson_use cups cups) \
 		$(meson_use networkmanager network_manager) \
