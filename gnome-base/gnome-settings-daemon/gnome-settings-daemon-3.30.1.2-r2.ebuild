@@ -2,7 +2,7 @@
 
 EAPI="6"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6,3_7} )
 
 inherit gnome-meson python-any-r1 systemd udev virtualx
 
@@ -74,7 +74,7 @@ RDEPEND="${COMMON_DEPEND}
 	!<gnome-base/gnome-control-center-2.22
 	!<gnome-extra/gnome-color-manager-3.1.1
 	!<gnome-extra/gnome-power-manager-3.1.3
-	!<gnome-base/gnome-session-3.23.2
+	!<gnome-base/gnome-session-3.27.90
 
 	elogind? ( sys-auth/elogind )
 	systemd? ( >=sys-apps/systemd-186:0= )
@@ -91,10 +91,7 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	>=dev-util/intltool-0.40
 	virtual/pkgconfig
-	x11-proto/inputproto
-	x11-proto/xf86miscproto
-	x11-proto/kbproto
-	>=x11-proto/xproto-7.0.15
+	x11-base/xorg-proto
 "
 
 PATCHES=( "${FILESDIR}/${P}-disable-autosleep.patch" )
@@ -117,7 +114,9 @@ src_configure() {
 		$(meson_use cups cups) \
 		$(meson_use networkmanager network_manager) \
 		$(meson_use smartcard smartcard ) \
-		$(meson_use wayland wayland)
+		$(meson_use wayland wayland) \
+		-Dalsa=true \
+		-Drfkill=true
 }
 
 src_test() {

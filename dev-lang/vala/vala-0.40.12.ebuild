@@ -33,7 +33,7 @@ src_prepare() {
 	# From GNOME:
 	# 	https://git.gnome.org/browse/vala/commit/?id=2b742fce82eb1326faaee3b2cc4ff993e701ef53
 	# 	https://git.gnome.org/browse/vala/commit/?id=c63247759dca09d1a81dce6bc2e2992746d7c996
-	eapply "${FILESDIR}"/${PN}-0.38.8-uncouple-valadoc.patch
+	eapply "${FILESDIR}"/${PN}-0.40.12-uncouple-valadoc.patch
 
 	eautoreconf
 	gnome2_src_prepare
