@@ -11,7 +11,7 @@ HOMEPAGE="https://www.gtk.org/"
 
 LICENSE="LGPL-2+"
 SLOT="3"
-IUSE="aqua broadway cloudprint colord cups examples +introspection test vim-syntax wayland +X xinerama"
+IUSE="aqua broadway cloudprint colord cups doc examples +introspection test vim-syntax wayland +X xinerama"
 REQUIRED_USE="
 	|| ( aqua wayland X )
 	xinerama? ( X )
@@ -27,12 +27,12 @@ RESTRICT="test"
 # bug #????
 COMMON_DEPEND="
 	>=dev-libs/atk-2.15[introspection?]
-	>=dev-libs/glib-2.49.4:2
+	>=dev-libs/glib-2.53.4:2
 	media-libs/fontconfig
-	>=media-libs/libepoxy-1.0[X(+)?]
+	>=media-libs/libepoxy-1.4[X(+)?]
 	>=x11-libs/cairo-1.14[aqua?,glib,svg,X?]
 	>=x11-libs/gdk-pixbuf-2.30:2[introspection?]
-	>=x11-libs/pango-1.37.3[introspection?]
+	>=x11-libs/pango-1.41.0[introspection?]
 	x11-misc/shared-mime-info
 
 	cloudprint? (
@@ -67,15 +67,10 @@ DEPEND="${COMMON_DEPEND}
 	dev-libs/gobject-introspection-common
 	>=dev-util/gdbus-codegen-2.48
 	>=dev-util/gtk-doc-am-1.20
+	doc? ( >=dev-util/gtk-doc-1.20 )
 	>=sys-devel/gettext-0.19.7
 	virtual/pkgconfig
-	X? (
-		x11-proto/xextproto
-		x11-proto/xproto
-		x11-proto/inputproto
-		x11-proto/damageproto
-		xinerama? ( x11-proto/xineramaproto )
-	)
+	X? ( x11-base/xorg-proto )
 	test? (
 		media-fonts/font-misc-misc
 		media-fonts/font-cursor-misc )
@@ -144,6 +139,7 @@ src_configure() {
 		$(use_enable cloudprint) \
 		$(use_enable colord) \
 		$(use_enable cups cups auto) \
+		$(use_enable doc gtk-doc) \
 		$(use_enable introspection) \
 		$(use_enable wayland wayland-backend) \
 		$(use_enable X x11-backend) \
