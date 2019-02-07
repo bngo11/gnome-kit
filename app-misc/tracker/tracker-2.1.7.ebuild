@@ -112,6 +112,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	default
 	eautoreconf # See bug #367975
 	gnome2_src_prepare
 	vala_src_prepare
