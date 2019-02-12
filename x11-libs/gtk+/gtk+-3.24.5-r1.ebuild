@@ -103,6 +103,10 @@ strip_builddir() {
 }
 
 src_prepare() {
+	# -O3 and company cause random crashes in applications. Bug #133469
+	replace-flags -O3 -O2
+	strip-flags
+
 	if ! use test ; then
 		# don't waste time building tests
 		strip_builddir SRC_SUBDIRS testsuite Makefile.{am,in}
@@ -118,14 +122,18 @@ src_prepare() {
 		strip_builddir SRC_SUBDIRS examples Makefile.{am,in}
 	fi
 
+	# gtk-3-24 branch at morning of 2019-02-07 - fribidi explicit linking, compiler warning fixes, small bugfixes
+	eapply "${FILESDIR}"/patches/3.24.5
+
 	# gtk-update-icon-cache is installed by dev-util/gtk-update-icon-cache
 	eapply "${FILESDIR}"/${PN}-3.22.2-update-icon-cache.patch
 
 	# Fix broken autotools logic
 	eapply "${FILESDIR}"/${PN}-3.22.20-libcloudproviders-automagic.patch
 
-	eautoreconf
+	# call eapply_user (implicitly) before eautoreconf
 	gnome2_src_prepare
+	eautoreconf
 }
 
 src_configure() {
