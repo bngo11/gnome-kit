@@ -94,7 +94,7 @@ DEPEND="${COMMON_DEPEND}
 	x11-base/xorg-proto
 "
 
-PATCHES=( "${FILESDIR}/${P}-disable-autosleep.patch" )
+PATCHES=( "${FILESDIR}/${PN}-3.30.1.2-disable-autosleep.patch" )
 
 python_check_deps() {
 	if use test; then

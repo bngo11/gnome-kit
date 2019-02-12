@@ -108,7 +108,7 @@ src_prepare() {
 	fi
 
 	# gdbus-codegen is a separate package
-	eapply "${FILESDIR}"/${P}-external-gdbus-codegen.patch
+	eapply "${FILESDIR}"/${PN}-2.59.2-external-gdbus-codegen.patch
 
 	gnome2_src_prepare
 }
@@ -150,10 +150,10 @@ src_configure() {
 		-Dinternal_pcre=false
 		-Dforce_posix_threads=false
 		-Dgtk_doc=false
+		-Dselinux=$(usex selinux enabled disabled)
 		$(meson_use xattr xattr)
 		$(meson_use fam fam)
 		$(meson_use kernel_linux libmount)
-		$(meson_use selinux selinux)
 		$(meson_use systemtap dtrace)
 		$(meson_use systemtap systemtap)
 		$(meson_use test installed_tests)

@@ -24,7 +24,7 @@ PDEPEND=">=dev-libs/glib-${PV}:2"
 
 src_prepare() {
 	default
-	eapply "${FILESDIR}/${P}-man-page.patch"
+	eapply "${FILESDIR}/${PN}-2.59.2-man-page.patch"
 	eapply "${FILESDIR}/${PN}-2.56.0-sitedir.patch"
 }
 
