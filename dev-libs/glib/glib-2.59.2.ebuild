@@ -4,7 +4,7 @@ EAPI=6
 PYTHON_COMPAT=( python{2_7,3_5,3_6,3_7} )
 GNOME2_EAUTORECONF=yes
 
-inherit autotools bash-completion-r1 epunt-cxx flag-o-matic gnome2 libtool linux-info pax-utils python-any-r1 toolchain-funcs virtualx
+inherit bash-completion-r1 flag-o-matic gnome2 linux-info meson ninja-utils python-r1 toolchain-funcs virtualx
 
 # Until bug #537330 glib is a reverse dependency of pkgconfig and, then
 # adding new dependencies end up making stage3 to grow. Every addition needs
@@ -17,7 +17,7 @@ SRC_URI="${SRC_URI}
 
 LICENSE="LGPL-2.1+"
 SLOT="2"
-IUSE="dbus debug fam gtk-doc kernel_linux +mime selinux static-libs systemtap test xattr"
+IUSE="dbus fam gtk-doc kernel_linux +mime selinux static-libs systemtap test xattr"
 KEYWORDS="*"
 
 RDEPEND="
@@ -73,6 +73,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	default
 	# Prevent build failure in stage3 where pkgconfig is not available, bug #481056
 	mv -f "${WORKDIR}"/pkg-config-*/pkg.m4 "${S}"/m4macros/ || die
 
@@ -101,14 +102,14 @@ src_prepare() {
 		sed -i -e "/timer\/basic/d" glib/tests/timer.c || die
 
 		ewarn "Tests for search-utils have been skipped"
-		sed -i -e "/search-utils/d" glib/tests/Makefile.am || die
+		sed -i -e "/search-utils/d" glib/tests/meson.build || die
 	else
 		# Don't build tests, also prevents extra deps, bug #512022
-		sed -i -e 's/ tests//' {.,gio,glib}/Makefile.am || die
+		sed -i -e "/subdir('tests')/d" {.,gio,glib}/meson.build || die
 	fi
 
 	# gdbus-codegen is a separate package
-	eapply "${FILESDIR}"/${PN}-2.58.3-external-gdbus-codegen.patch
+	eapply "${FILESDIR}"/${PN}-2.59.2-external-gdbus-codegen.patch
 
 	# Tarball doesn't come with gtk-doc.make and we can't unconditionally depend on dev-util/gtk-doc due
 	# to circular deps during bootstramp. If actually not building gtk-doc, an almost empty file will do
@@ -118,9 +119,6 @@ src_prepare() {
 EXTRA_DIST =
 CLEANFILES =
 EOF
-
-	gnome2_src_prepare
-	epunt_cxx
 }
 
 src_configure() {
@@ -151,30 +149,22 @@ src_configure() {
 		export ac_cv_func_posix_get{pwuid,grgid}_r=yes
 	fi
 
-	local myconf
+	local emesonargs
 
-	case "${CHOST}" in
-		*-mingw*) myconf="${myconf} --with-threads=win32" ;;
-		*)        myconf="${myconf} --with-threads=posix" ;;
-	esac
+	ECONF_SOURCE="${S}" emesonargs=(
+		-Dman=true
+		-Dinternal_pcre=false
+		-Dforce_posix_threads=false
+		-Dselinux=$(usex selinux enabled disabled)
+		$(meson_use xattr xattr)
+		$(meson_use fam fam)
+		$(meson_use gtk-doc gtk_doc)
+		$(meson_use kernel_linux libmount)
+		$(meson_use systemtap dtrace)
+		$(meson_use systemtap systemtap)
+	)
 
-	# libelf used only by the gresource bin
-	ECONF_SOURCE="${S}" gnome2_src_configure ${myconf} \
-		$(usex debug --enable-debug=yes ' ') \
-		$(use_enable xattr) \
-		$(use_enable fam) \
-		$(use_enable gtk-doc) \
-		$(use_enable kernel_linux libmount) \
-		$(use_enable selinux) \
-		$(use_enable static-libs static) \
-		$(use_enable systemtap dtrace) \
-		$(use_enable systemtap systemtap) \
-		--enable-libelf \
-		--with-python=${EPYTHON} \
-		--disable-compile-warnings \
-		--enable-man \
-		--with-pcre=system \
-		--with-xml-catalog="${EPREFIX}/etc/xml/catalog"
+	meson_src_configure
 
 	local d
 	for d in glib gio gobject; do
@@ -205,7 +195,7 @@ src_test() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" completiondir="$(get_bashcompdir)" install
+	meson_src_install completiondir="$(get_bashcompdir)"
 	keepdir /usr/$(get_libdir)/gio/modules
 	einstalldocs
 
