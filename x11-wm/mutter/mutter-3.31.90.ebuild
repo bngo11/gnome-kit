@@ -2,7 +2,7 @@
 
 EAPI="6"
 
-inherit autotools gnome-meson virtualx
+inherit gnome2 virtualx meson
 
 DESCRIPTION="GNOME 3 compositing window manager based on Clutter"
 HOMEPAGE="https://git.gnome.org/browse/mutter/"
@@ -11,7 +11,7 @@ LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE="elogind +gles2 input_devices_wacom +introspection test udev wayland"
+IUSE="elogind +gles2 input_devices_wacom +introspection udev wayland"
 REQUIRED_USE="
 	wayland? ( elogind )
 "
@@ -25,7 +25,7 @@ COMMON_DEPEND="
 	>=x11-libs/pango-1.30[introspection?]
 	>=x11-libs/cairo-1.14[X]
 	>=x11-libs/gtk+-3.19.8:3[X,introspection?]
-	>=dev-libs/glib-2.53.4:2[dbus]
+	>=dev-libs/glib-2.59.2:2[dbus]
 	>=media-libs/libcanberra-0.26[gtk3]
 	>=x11-libs/startup-notification-0.7
 	>=x11-libs/libXcomposite-0.2
@@ -51,7 +51,7 @@ COMMON_DEPEND="
 	x11-misc/xkeyboard-config
 
 	gnome-extra/zenity
-	>=media-libs/mesa-17.2.0[egl]
+	media-libs/mesa[egl]
 
 	gles2? ( media-libs/mesa[gles2] )
 	input_devices_wacom? ( >=dev-libs/libwacom-0.13 )
@@ -60,7 +60,7 @@ COMMON_DEPEND="
 	wayland? (
 		>=dev-libs/libinput-1.4
 		>=dev-libs/wayland-1.6.90
-		>=dev-libs/wayland-protocols-1.9
+		>=dev-libs/wayland-protocols-1.16
 		>=media-libs/mesa-10.3[egl,gbm,wayland]
 		|| ( sys-auth/elogind sys-apps/systemd )
 		>=virtual/libgudev-232:=
@@ -68,12 +68,13 @@ COMMON_DEPEND="
 		x11-base/xorg-server[wayland]
 		x11-libs/libdrm:=
 	)
+	media-video/pipewire
 "
+
 DEPEND="${COMMON_DEPEND}
 	>=sys-devel/gettext-0.19.6
 	virtual/pkgconfig
 	x11-base/xorg-proto
-	>=dev-libs/pipewire-0.2.5
 	test? ( app-text/docbook-xml-dtd:4.5 )
 	wayland? ( >=sys-kernel/linux-headers-4.4 )
 "
@@ -85,34 +86,29 @@ src_prepare() {
 	if use elogind; then
 		eapply "${FILESDIR}"/${PN}-3.32.0-support-elogind.patch
 	fi
-
-	gnome-meson_src_prepare
+	default
 }
 
 src_configure() {
-	# Prefer gl driver by default
-	# GLX is forced by mutter but optional in clutter
-	# xlib-egl-platform required by mutter x11 backend
-	# native backend without wayland is useless
-	gnome-meson_src_configure \
-		-Dopengl=true \
-		-Dglx=true \
-		-Degl=true \
-		-Dsm=true \
-		-Dstartup_notification=true \
-		-Dverbose=true \
-		-Dremote_desktop=true \
-		-Dpango_ft2=true \
-		$(meson_use gles2 gles2)        \
-		$(meson_use introspection introspection) \
-		$(meson_use wayland wayland) \
-		$(meson_use wayland egl-device) \
-		# $(meson_use wayland wayland_eglstream) \
-		$(meson_use wayland native-backend) \
-		$(meson_use input_devices_wacom libwacom) \
-		$(meson_use udev udev)
-}
+	sed -i "/'-Werror=redundant-decls',/d" "${S}"/meson.build || die "sed failed"
 
-src_test() {
-	virtx emake check
+	local emesonargs=(
+		-Dopengl=true
+		-Degl=true
+		-Dglx=true
+		-Dsm=true
+		-Dstartup_notification=true
+		-Dverbose=true
+		-Dremote_desktop=true
+		-Dpango_ft2=true
+		$(meson_use gles2)
+		$(meson_use introspection)
+		$(meson_use wayland)
+		$(meson_use wayland egl-device)
+		# $(meson_use wayland wayland_eglstream)
+		$(meson_use wayland native-backend)
+		$(meson_use input_devices_wacom libwacom)
+		$(meson_use udev)
+	)
+	meson_src_configure
 }

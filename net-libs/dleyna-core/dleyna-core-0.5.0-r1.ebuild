@@ -1,7 +1,7 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="5"
+EAPI="6"
 
 inherit eutils
 
@@ -16,11 +16,17 @@ IUSE=""
 
 RDEPEND="
 	>=dev-libs/glib-2.28:2
-	>=net-libs/gupnp-0.20.5
+	>=net-libs/gupnp-1.1.2
 "
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 "
+
+
+src_prepare() {
+	default
+	eapply "${FILESDIR}/${P}-gupnp.patch"
+}
 
 src_install() {
 	default

@@ -1,6 +1,5 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 # @ECLASS: check-reqs.eclass
 # @MAINTAINER:
@@ -8,6 +7,7 @@
 # @AUTHOR:
 # Bo Ørsted Andresen <zlin@gentoo.org>
 # Original Author: Ciaran McCreesh <ciaranm@gentoo.org>
+# @SUPPORTED_EAPIS: 0 1 2 3 4 5 6 7
 # @BLURB: Provides a uniform way of handling ebuild which have very high build requirements
 # @DESCRIPTION:
 # This eclass provides a uniform way of handling ebuilds which have very high
@@ -40,8 +40,6 @@
 
 if [[ ! ${_CHECK_REQS_ECLASS_} ]]; then
 
-inherit eutils
-
 # @ECLASS-VARIABLE: CHECKREQS_MEMORY
 # @DEFAULT_UNSET
 # @DESCRIPTION:
@@ -65,26 +63,15 @@ inherit eutils
 EXPORT_FUNCTIONS pkg_setup
 case "${EAPI:-0}" in
 	0|1|2|3) ;;
-	4|5|6) EXPORT_FUNCTIONS pkg_pretend ;;
+	4|5|6|7) EXPORT_FUNCTIONS pkg_pretend ;;
 	*) die "EAPI=${EAPI} is not supported" ;;
 esac
 
-# @FUNCTION: check_reqs
-# @DESCRIPTION:
 # Obsolete function executing all the checks and printing out results
 check_reqs() {
-	debug-print-function ${FUNCNAME} "$@"
-
-	[[ ${EAPI:-0} == [012345] ]] || die "${FUNCNAME} is banned in EAPI > 5"
-
-	echo
-	eqawarn "Package calling old ${FUNCNAME} function."
-	eqawarn "Please file a bug against the package."
-	eqawarn "It should call check-reqs_pkg_pretend and check-reqs_pkg_setup"
-	eqawarn "and possibly use EAPI=4 or later."
-	echo
-
-	check-reqs_pkg_setup "$@"
+	eerror "Package calling old ${FUNCNAME} function."
+	eerror "It should call check-reqs_pkg_pretend and check-reqs_pkg_setup."
+	die "${FUNCNAME} is banned"
 }
 
 # @FUNCTION: check-reqs_pkg_setup
@@ -177,10 +164,9 @@ check-reqs_get_kibibytes() {
 	local size=${1%[GMT]}
 
 	case ${unit} in
-		G) echo $((1024 * 1024 * size)) ;;
 		M) echo $((1024 * size)) ;;
+		G) echo $((1024 * 1024 * size)) ;;
 		T) echo $((1024 * 1024 * 1024 * size)) ;;
-		[0-9]) echo $((1024 * size)) ;;
 		*)
 			die "${FUNCNAME}: Unknown unit: ${unit}"
 		;;
@@ -197,17 +183,8 @@ check-reqs_get_number() {
 
 	[[ -z ${1} ]] && die "Usage: ${FUNCNAME} [size]"
 
-	local unit=${1:(-1)}
 	local size=${1%[GMT]}
-	local msg=eerror
-	[[ ${EAPI:-0} == [012345] ]] && msg=eqawarn
-
-	# Check for unset units and warn about them.
-	# Backcompat.
-	if [[ ${size} == ${1} ]]; then
-		${msg} "Package does not specify unit for the size check"
-		${msg} "File bug against the package. It should specify the unit."
-	fi
+	[[ ${size} == ${1} ]] && die "${FUNCNAME}: Missing unit: ${1}"
 
 	echo ${size}
 }
@@ -215,7 +192,7 @@ check-reqs_get_number() {
 # @FUNCTION: check-reqs_get_unit
 # @INTERNAL
 # @DESCRIPTION:
-# Internal function that return the unit without the numerical value.
+# Internal function that returns the unit without the numerical value.
 # Returns "GiB" for "1G" or "TiB" for "150T".
 check-reqs_get_unit() {
 	debug-print-function ${FUNCNAME} "$@"
@@ -225,8 +202,8 @@ check-reqs_get_unit() {
 	local unit=${1:(-1)}
 
 	case ${unit} in
+		M) echo "MiB" ;;
 		G) echo "GiB" ;;
-		[M0-9]) echo "MiB" ;;
 		T) echo "TiB" ;;
 		*)
 			die "${FUNCNAME}: Unknown unit: ${unit}"

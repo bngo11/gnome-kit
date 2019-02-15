@@ -45,7 +45,4 @@ src_configure() {
 
 src_install() {
 	gnome-meson_src_install
-	cp "${D}usr/lib64/pkgconfig/gssdp-1.2.pc" "${D}usr/lib64/pkgconfig/gssdp-1.0.pc"
-	sed -i -e "s/Name: gssdp-1.2/Name: gssdp-1.0/" "${D}usr/lib64/pkgconfig/gssdp-1.0.pc"
-	sed -i -e "s/-lgssdp-1.2/-lgssdp-1.0/" "${D}usr/lib64/pkgconfig/gssdp-1.0.pc"
 }

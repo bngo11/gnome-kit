@@ -1,10 +1,8 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 # @ECLASS: fcaps.eclass
 # @MAINTAINER:
-# Constanze Hausner <constanze@gentoo.org>
 # base-system@gentoo.org
 # @BLURB: function to set POSIX file-based capabilities
 # @DESCRIPTION:
@@ -13,7 +11,7 @@
 # often via packages like libcap.
 #
 # Due to probable capability-loss on moving or copying, this happens in
-# pkg_postinst-phase (at least for now).
+# pkg_postinst phase (at least for now).
 #
 # @EXAMPLE:
 # You can manually set the caps on ping and ping6 by doing:
@@ -112,11 +110,12 @@ fcaps() {
 		root=${EROOT:-${ROOT}}
 		;;
 	esac
+	root=${root%/}
 
 	# Process every file!
 	local file
 	for file ; do
-		[[ ${file} != /* ]] && file="${root}${file}"
+		[[ ${file} != /* ]] && file="${root}/${file}"
 
 		if use filecaps ; then
 			# Try to set capabilities.  Ignore errors when the

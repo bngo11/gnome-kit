@@ -3,10 +3,11 @@
 EAPI="6"
 GNOME2_LA_PUNT="yes"
 
-inherit autotools gnome2 pam readme.gentoo-r1 systemd user versionator
+inherit autotools eutils gnome2 pam readme.gentoo-r1 systemd user versionator
 
 DESCRIPTION="GNOME Display Manager for managing graphical display servers and user logins"
 HOMEPAGE="https://wiki.gnome.org/Projects/GDM"
+
 SRC_URI="${SRC_URI}
 	branding? ( https://www.mail-archive.com/tango-artists@lists.freedesktop.org/msg00043/tango-gentoo-v1.1.tar.gz )
 "
@@ -15,8 +16,8 @@ LICENSE="
 	GPL-2+
 	branding? ( CC-BY-SA-4.0 )
 "
+
 SLOT="0"
-KEYWORDS="*"
 
 IUSE="accessibility audit branding +elogind fprint +introspection ipv6 plymouth selinux smartcard systemd tcpd test wayland xinerama"
 REQUIRED_USE="
@@ -24,17 +25,19 @@ REQUIRED_USE="
 	wayland? ( || ( elogind systemd ) )
 "
 
+KEYWORDS="*"
+
 # NOTE: x11-base/xorg-server dep is for X_SERVER_PATH etc, bug #295686
 # nspr used by smartcard extension
 # dconf, dbus and g-s-d are needed at install time for dconf update
 # We need either systemd or >=openrc-0.12 to restart gdm properly, bug #463784
 COMMON_DEPEND="
 	app-text/iso-codes
-	>=dev-libs/glib-2.36:2[dbus]
+	>=dev-libs/glib-2.58.0:2[dbus]
 	>=x11-libs/gtk+-2.91.1:3
 	>=gnome-base/dconf-0.20
-	>=gnome-base/gnome-settings-daemon-3.1.4
-	gnome-base/gsettings-desktop-schemas
+	>=gnome-base/gnome-settings-daemon-3.30.0
+	>=gnome-base/gsettings-desktop-schemas-3.28.1
 	>=media-libs/fontconfig-2.5.0:1.0
 	>=media-libs/libcanberra-0.4[gtk3]
 	sys-apps/dbus
@@ -53,8 +56,8 @@ COMMON_DEPEND="
 
 	virtual/pam
 
-	elogind? ( sys-auth/elogind )
 	systemd? ( >=sys-apps/systemd-186:0=[pam] )
+	elogind? ( sys-auth/elogind )
 
 	sys-auth/pambase[elogind?,systemd?]
 
@@ -84,14 +87,11 @@ RDEPEND="${COMMON_DEPEND}
 "
 DEPEND="${COMMON_DEPEND}
 	app-text/docbook-xml-dtd:4.1.2
-	dev-util/gdbus-codegen
 	>=dev-util/intltool-0.40.0
 	dev-util/itstool
 	virtual/pkgconfig
-	x11-proto/inputproto
-	x11-proto/randrproto
+	x11-base/xorg-proto
 	test? ( >=dev-libs/check-0.9.4 )
-	xinerama? ( x11-proto/xineramaproto )
 "
 
 DOC_CONTENTS="
@@ -165,15 +165,15 @@ src_configure() {
 		--with-xdmcp=yes \
 		--enable-authentication-scheme=pam \
 		--with-default-pam-config=exherbo \
-		--with-pam-mod-dir=$(getpam_mod_dir) \
+		--with-pam-dir=$(getpam_mod_dir) \
 		--with-at-spi-registryd-directory="${EPREFIX}"/usr/libexec \
-		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)" \
 		--without-xevie \
+		$(use_enable systemd systemd-journal) \
+		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)" \
 		$(use_with audit libaudit) \
 		$(use_enable ipv6) \
 		$(use_with plymouth) \
 		$(use_with selinux) \
-		$(use_enable systemd systemd-journal) \
 		$(use_with tcpd tcp-wrappers) \
 		$(use_enable wayland wayland-support) \
 		$(use_with xinerama) \
@@ -220,8 +220,6 @@ pkg_postinst() {
 		[[ ! -e "${d}" ]] || chown -R gdm:gdm "${d}" || ret=1
 	done
 	eend ${ret}
-
-	systemd_reenable gdm.service
 
 	readme.gentoo_print_elog
 

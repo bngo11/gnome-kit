@@ -4,7 +4,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-inherit gnome-meson toolchain-funcs
+inherit gnome2 toolchain-funcs meson
 
 DESCRIPTION="Internationalized text layout and rendering library"
 HOMEPAGE="http://www.pango.org/"
@@ -40,12 +40,13 @@ DEPEND="${RDEPEND}
 src_configure() {
 	tc-export CXX
 
-	ECONF_SOURCE=${S} \
-	gnome-meson_src_configure \
-		$(meson_use introspection gir) \
+	local emesonargs=(
+		$(meson_use introspection gir)
 		$(meson_use doc enable_docs)
+	)
+	meson_src_configure
 }
 
 src_install() {
-	gnome-meson_src_install
+	meson_src_install
 }

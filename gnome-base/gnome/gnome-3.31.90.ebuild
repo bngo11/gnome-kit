@@ -28,7 +28,7 @@ RDEPEND="
 	>=gnome-base/gnome-shell-3.30.0[bluetooth?]
 	gnome-base/gnome-shell-common
 
-	>=x11-themes/gnome-backgrounds-$(get_version_component_range 1-2)
+	>=x11-themes/gnome-backgrounds-3.30
 	x11-themes/sound-theme-freedesktop
 
 	accessibility? (

@@ -63,9 +63,6 @@ src_configure() {
 
 src_install() {
 	gnome-meson_src_install
-	cp "${D}usr/lib64/pkgconfig/gupnp-1.2.pc" "${D}usr/lib64/pkgconfig/gupnp-1.0.pc"
-	sed -i -e "s/Name: gupnp-1.2/Name: gupnp-1.0/" "${D}usr/lib64/pkgconfig/gupnp-1.0.pc"
-	sed -i -e "s/-lgupnp-1.2/-lgupnp-1.0/" "${D}usr/lib64/pkgconfig/gupnp-1.0.pc"
 }
 
 src_install_all() {

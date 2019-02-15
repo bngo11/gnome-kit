@@ -2,9 +2,10 @@
 
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_5,3_6,3_7} )
-GNOME2_EAUTORECONF=yes
 
-inherit bash-completion-r1 flag-o-matic gnome2 linux-info meson ninja-utils python-r1 toolchain-funcs virtualx
+#TODO most of those classes are not used
+inherit meson bash-completion-r1 epunt-cxx flag-o-matic gnome2 libtool linux-info \
+	pax-utils python-any-r1 toolchain-funcs virtualx
 
 # Until bug #537330 glib is a reverse dependency of pkgconfig and, then
 # adding new dependencies end up making stage3 to grow. Every addition needs
@@ -55,10 +56,6 @@ PDEPEND="
 "
 # shared-mime-info needed for gio/xdgmime, bug #409481
 # dconf is needed to be able to save settings, bug #498436
-
-MULTILIB_CHOST_TOOLS=(
-	/usr/bin/gio-querymodules$(get_exeext)
-)
 
 pkg_setup() {
 	if use kernel_linux ; then
@@ -149,27 +146,19 @@ src_configure() {
 		export ac_cv_func_posix_get{pwuid,grgid}_r=yes
 	fi
 
-	local emesonargs
-
-	ECONF_SOURCE="${S}" emesonargs=(
+	local emesonargs=(
 		-Dman=true
 		-Dinternal_pcre=false
-		-Dforce_posix_threads=false
-		-Dselinux=$(usex selinux enabled disabled)
-		$(meson_use xattr xattr)
-		$(meson_use fam fam)
+		$(meson_use xattr)
+		$(meson_use fam)
 		$(meson_use gtk-doc gtk_doc)
 		$(meson_use kernel_linux libmount)
+		-Dselinux=$(usex selinux enabled disabled)
 		$(meson_use systemtap dtrace)
-		$(meson_use systemtap systemtap)
+		$(meson_use systemtap)
 	)
 
 	meson_src_configure
-
-	local d
-	for d in glib gio gobject; do
-		ln -s "${S}"/docs/reference/${d}/html docs/reference/${d}/html || die
-	done
 }
 
 src_test() {
