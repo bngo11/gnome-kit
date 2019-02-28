@@ -2,7 +2,7 @@
 
 EAPI="6"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6,3_7} pypy )
+PYTHON_COMPAT=( python{3_4,3_5,3_6,3_7} pypy )
 VALA_USE_DEPEND="vapigen"
 
 inherit cmake-utils db-use flag-o-matic gnome2 python-any-r1 systemd vala virtualx
@@ -12,27 +12,26 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Evolution"
 
 # Note: explicitly "|| ( LGPL-2 LGPL-3 )", not "LGPL-2+".
 LICENSE="|| ( LGPL-2 LGPL-3 ) BSD Sleepycat"
-SLOT="0/60" # subslot = libcamel-1.2 soname version
+SLOT="0/62" # subslot = libcamel-1.2 soname version
 KEYWORDS="*"
 
 IUSE="api-doc-extras +berkdb +gnome-online-accounts +gtk google +introspection ipv6 ldap kerberos vala +weather"
 REQUIRED_USE="vala? ( introspection )"
 
-# Some tests fail due to missings locales.
-# Also, dbus tests are flacky, bugs #397975 #501834
+# Some tests fail due to missing locales.
+# Also, dbus tests are flaky, bugs #397975 #501834
 # It looks like a nightmare to disable those for now.
 RESTRICT="test"
 
-# sys-libs/db is only required for migrating from <3.13 versions
 # gdata-0.17.7 soft required for google tasks (more than 100)
-# berkdb needed only for migrating old calendar data, bug #519512
+# berkdb needed only for migrating old addressbook data from <3.13 versions, bug #519512
 RDEPEND="
 	>=app-crypt/gcr-3.4
 	>=app-crypt/libsecret-0.5[crypt]
 	>=dev-db/sqlite-3.7.17:=
 	>=dev-libs/glib-2.46:2
 	>=dev-libs/libgdata-0.10:=
-	dev-libs/libical:0/2
+	>=dev-libs/libical-2.0:=
 	>=dev-libs/libxml2-2
 	>=dev-libs/nspr-4.4:=
 	>=dev-libs/nss-3.9:=
@@ -67,7 +66,6 @@ DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.18.3
 	virtual/pkgconfig
 	vala? ( $(vala_depend) )
-	>=media-libs/libcanberra-0.25
 "
 
 pkg_setup() {
@@ -75,13 +73,13 @@ pkg_setup() {
 }
 
 src_prepare() {
-	use vala && vala_src_prepare
-	gnome2_src_prepare
-
 	# Make CMakeLists versioned vala enabled
-	sed -e "s;\(find_program(VALAC\) valac);\1 ${VALAC});" \
-	    -e "s;\(find_program(VAPIGEN\) vapigen);\1 ${VAPIGEN});" \
-		-i "${S}"/CMakeLists.txt || die
+	eapply "${FILESDIR}"/${PN}-3.24.2-assume-vala-bindings.patch
+
+	eapply "${FILESDIR}"/${PN}-3.30.5-collection-auth.patch # Prerequisite for evolution-ews cert checking fix
+
+	use vala && vala_src_prepare
+	cmake-utils_src_prepare
 }
 
 src_configure() {
@@ -89,14 +87,6 @@ src_configure() {
 	# so include the right dir in CPPFLAGS
 	use berkdb && append-cppflags "-I$(db_includedir)"
 
-	local google_auth_enable
-	if use google || use gnome-online-accounts; then
-		google_auth_enable="ON"
-	else
-		google_auth_enable="OFF"
-	fi
-
-	# phonenumber does not exist in tree
 	local mycmakeargs=(
 		-DWITH_SYSTEMDUSERUNITDIR="$(systemd_get_userunitdir)"
 		-DENABLE_GTK_DOC=$(usex api-doc-extras)
@@ -110,17 +100,16 @@ src_configure() {
 		-DWITH_PHONENUMBER=OFF
 		-DENABLE_SMIME=ON
 		-DENABLE_GTK=$(usex gtk)
-		-DENABLE_GOOGLE_AUTH=${google_auth_enable}
 		-DENABLE_EXAMPLES=OFF
 		-DENABLE_GOA=$(usex gnome-online-accounts)
 		-DENABLE_UOA=OFF
 		-DWITH_LIBDB=$(usex berkdb "${EPREFIX}"/usr "OFF")
-		# ENABLE_BACKTRACES requires libdwarf ?
 		-DENABLE_IPV6=$(usex ipv6)
 		-DENABLE_WEATHER=$(usex weather)
 		-DENABLE_GOOGLE=$(usex google)
 		-DENABLE_LARGEFILE=ON
 		-DENABLE_VALA_BINDINGS=$(usex vala)
+		-DENABLE_OAUTH2=$(usex google "ON" "OFF")
 	)
 
 	cmake-utils_src_configure
@@ -135,6 +124,11 @@ src_test() {
 }
 
 src_install() {
+	if [[ -f /usr/etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop ]]; then
+		addwrite /usr/etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop
+		rm /usr/etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop || die
+	fi
+
 	cmake-utils_src_install
 
 	if use ldap; then
@@ -148,6 +142,6 @@ pkg_postinst() {
 	gnome2_pkg_postinst
 	if ! use berkdb; then
 		ewarn "You will need to enable berkdb USE for migrating old"
-		ewarn "(pre-3.12 evolution versions) addressbook data"
+		ewarn "(pre-3.13 evolution versions) addressbook data"
 	fi
 }
