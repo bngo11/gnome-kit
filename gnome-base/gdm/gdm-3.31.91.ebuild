@@ -41,7 +41,7 @@ COMMON_DEPEND="
 	>=media-libs/fontconfig-2.5.0:1.0
 	>=media-libs/libcanberra-0.4[gtk3]
 	sys-apps/dbus
-	>=sys-apps/accountsservice-0.6.35
+	>=sys-apps/accountsservice-0.6.12
 
 	x11-apps/sessreg
 	x11-base/xorg-server
@@ -125,18 +125,18 @@ pkg_setup() {
 
 src_prepare() {
 	# ssh-agent handling must be done at xinitrc.d, bug #220603
-	eapply "${FILESDIR}/${PN}-2.32.0-xinitrc-ssh-agent.patch"
+	eapply "${FILESDIR}/${PN}-3.32.0-xinitrc-ssh-agent.patch"
 
 	# Gentoo does not have a fingerprint-auth pam stack
-	eapply "${FILESDIR}/${PN}-3.8.4-fingerprint-auth.patch"
+	eapply "${FILESDIR}/${PN}-3.32.0-fingerprint-auth.patch"
 
 	# Show logo when branding is enabled
-	use branding && eapply "${FILESDIR}/${PN}-3.30.2-logo.patch"
+	use branding && eapply "${FILESDIR}/${PN}-3.32.0-logo.patch"
 
-	eapply "${FILESDIR}"/${PN}-3.24.2-support-elogind.patch
+	eapply "${FILESDIR}"/${PN}-3.32.0-support-elogind.patch
 
 	if use elogind; then
-		eapply "${FILESDIR}"/${PN}-3.24.2-enable-elogind.patch
+		eapply "${FILESDIR}"/${PN}-3.32.0-enable-elogind.patch
 	fi
 
 	eapply "${FILESDIR}"/${PN}-3.30.2-prioritize-xorg.patch
