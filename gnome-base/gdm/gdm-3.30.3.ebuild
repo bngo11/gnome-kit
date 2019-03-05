@@ -139,7 +139,7 @@ src_prepare() {
 		eapply "${FILESDIR}"/${PN}-3.24.2-enable-elogind.patch
 	fi
 
-	eapply "${FILESDIR}"/${P}-prioritize-xorg.patch
+	eapply "${FILESDIR}"/${PN}-3.30.2-prioritize-xorg.patch
 
 	eautoreconf
 	gnome2_src_prepare

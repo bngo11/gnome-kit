@@ -50,6 +50,11 @@ DEPEND="${RDEPEND}
 "
 # libsecret is always required at build time per bug 322763
 
+PATCHES=(
+	"${FILESDIR}/vino-return-error-if-X11-is-no-detected.patch"
+	"${FILESDIR}/vino-segfaults-on-wayland.patch"
+)
+
 src_configure() {
 	gnome2_src_configure \
 		$(use_enable ipv6) \
