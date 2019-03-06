@@ -29,18 +29,23 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 "
 
+PATCHES=( "${FILESDIR}/${P}-autoptr.patch" )
+
 src_configure() {
-	meson_src_configure \
-		-Denable-background-plugin=true \
-		-Denable-dark-theme-plugin=true \
-		-Denable-scheduled-panel-plugin=true \
-		-Denable-score-plugin=true \
-		-Denable-today-panel-plugin=true \
-		-Denable-unscheduled-panel-plugin=true \
-		-Denable-todo-txt-plugin=true \
-		-Denable-todoist-plugin=true \
-		$(meson_use doc enable-gtk-doc) \
+	local emesonargs=(
+		-Denable-background-plugin=true
+		-Denable-dark-theme-plugin=true
+		-Denable-scheduled-panel-plugin=true
+		-Denable-score-plugin=true
+		-Denable-today-panel-plugin=true
+		-Denable-unscheduled-panel-plugin=true
+		-Denable-todo-txt-plugin=true
+		-Denable-todoist-plugin=true
+		$(meson_use doc enable-gtk-doc)
 		$(meson_use introspection instrospection)
+	)
+
+	meson_src_configure
 }
 
 src_compile() {
