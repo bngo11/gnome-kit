@@ -1,14 +1,18 @@
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 VALA_USE_DEPEND="vapigen"
+VALA_MIN_API_VERSION="0.30"
+VALA_MAX_API_VERSION="0.42"
 
-inherit autotools gnome2 vala
+inherit eutils gnome2 vala autotools
+
+# Gnome release team do ALWAYS forget to release vte and it likely will never change
+SRC_URI="https://gitlab.gnome.org/GNOME/vte/-/archive/${PV}/vte-${PV}.tar.bz2"
 
 DESCRIPTION="Library providing a virtual terminal emulator widget"
 HOMEPAGE="https://wiki.gnome.org/action/show/Apps/Terminal/VTE"
-# SRC_URI="https://git.gnome.org/browse/vte/snapshot/${P}.tar.xz"
-SRC_URI="https://download.gnome.org/sources/vte/0.55/${P}.tar.xz"
 
 LICENSE="LGPL-2+"
 SLOT="2.91"
@@ -26,14 +30,13 @@ RDEPEND="
 	sys-libs/ncurses:0=
 	sys-libs/zlib
 
-	crypt?  ( >=net-libs/gnutls-3.2.7:0= )
+	crypt?  ( >=net-libs/gnutls-3.2.7 )
 	glade? ( >=dev-util/glade-3.9:3.10 )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.0:= )
 "
 DEPEND="${RDEPEND}
-	dev-util/gperf
-	dev-libs/libxml2
 	dev-util/gtk-doc
+	dev-libs/libxml2
 	>=dev-util/gtk-doc-am-1.13
 	>=dev-util/intltool-0.35
 	sys-devel/gettext
@@ -70,7 +73,6 @@ src_configure() {
 	gnome2_src_configure \
 		--disable-test-application \
 		--disable-static \
-		--with-gtk=3.0 \
 		$(use_enable debug) \
 		$(use_enable glade glade-catalogue) \
 		$(use_with crypt gnutls) \
@@ -81,5 +83,5 @@ src_configure() {
 
 src_install() {
 	gnome2_src_install
-	mv "${ED}"/etc/profile.d/vte{,-${SLOT}}.sh || die
+	mv "${D}"/etc/profile.d/vte{,-${SLOT}}.sh || die
 }

@@ -18,6 +18,8 @@ RDEPEND="
 	>=dev-libs/glib-2.32:2
 	>=dev-libs/vala-common-${PV}
 "
+
+#TODO: slot install is a bit broken
 DEPEND="${RDEPEND}
 	!${CATEGORY}/${PN}:0
 	dev-libs/libxslt

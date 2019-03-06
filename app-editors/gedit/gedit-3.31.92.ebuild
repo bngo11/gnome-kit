@@ -1,13 +1,13 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
 GNOME2_LA_PUNT="yes" # plugins are dlopened
-PYTHON_COMPAT=( python3_{4,5,6} )
+PYTHON_COMPAT=( python3_{5,6,7} )
 VALA_MIN_API_VERSION="0.26"
 VALA_USE_DEPEND="vapigen"
 
-inherit gnome-meson multilib python-single-r1 vala virtualx
+inherit gnome2 meson multilib python-single-r1 vala virtualx
 
 DESCRIPTION="A text editor for the GNOME desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Gedit"
@@ -15,7 +15,7 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Gedit"
 LICENSE="GPL-2+ CC-BY-SA-3.0"
 SLOT="0"
 
-IUSE="doc +introspection +python spell vala"
+IUSE="+introspection +python spell vala"
 REQUIRED_USE="python? ( introspection ${PYTHON_REQUIRED_USE} )"
 
 KEYWORDS="*"
@@ -24,7 +24,7 @@ COMMON_DEPEND="
 	>=dev-libs/libxml2-2.5.0:2
 	>=dev-libs/glib-2.44:2[dbus]
 	>=x11-libs/gtk+-3.21.3:3[introspection?]
-	>=x11-libs/gtksourceview-3.21.2:3.0[introspection?]
+	x11-libs/gtksourceview:4[introspection?]
 	>=dev-libs/libpeas-1.14.1[gtk]
 
 	gnome-base/gsettings-desktop-schemas
@@ -38,7 +38,7 @@ COMMON_DEPEND="
 		dev-python/pycairo[${PYTHON_USEDEP}]
 		>=dev-python/pygobject-3:3[cairo,${PYTHON_USEDEP}]
 		dev-libs/libpeas[python,${PYTHON_USEDEP}] )
-	spell? ( >=app-text/gspell-0.2.5:0= )
+	spell? ( >=app-text/gspell-1.8.1 )
 "
 RDEPEND="${COMMON_DEPEND}
 	x11-themes/adwaita-icon-theme
@@ -52,36 +52,12 @@ DEPEND="${COMMON_DEPEND}
 	>=sys-devel/gettext-0.18
 	virtual/pkgconfig
 "
-# yelp-tools, gnome-common needed to eautoreconf
 
 pkg_setup() {
-	use python && python-single-r1_pkg_setup
+	use python && [[ ${MERGE_TYPE} != binary ]] && python-single-r1_pkg_setup
 }
 
 src_prepare() {
 	vala_src_prepare
-	gnome-meson_src_prepare
-}
-
-src_configure() {
-	DOCS="AUTHORS MAINTAINERS NEWS README.md"
-
-	gnome-meson_src_configure \
-		-Dplugins=true \
-		$(meson_use introspection introspection) \
-		$(meson_use doc documentation) \
-		$(meson_use vala vapi)
-}
-
-src_test() {
-	"${EROOT}${GLIB_COMPILE_SCHEMAS}" --allow-any-name "${S}/data" || die
-	GSETTINGS_SCHEMA_DIR="${S}/data" virtx emake check
-}
-
-src_install() {
-	local args=()
-	# manually set pyoverridesdir due to bug #524018 and AM_PATH_PYTHON limitations
-	use python && args+=( pyoverridesdir="$(python_get_sitedir)/gi/overrides" )
-
-	gnome-meson_src_install "${args[@]}"
+	gnome2_src_prepare
 }

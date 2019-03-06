@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -66,9 +66,6 @@ src_prepare() {
 
 src_configure() {
 	local emesonargs=(
-		-Dlibarchive=true
-		-Dmagic=true
-		-Drun-in-place=false
 		$(meson_use nautilus nautilus-action)
 		$(meson_use libnotify notification)
 		$(meson_use packagekit)

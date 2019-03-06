@@ -1,3 +1,4 @@
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -49,6 +50,12 @@ DEPEND="${RDEPEND}
 		>=sys-apps/dbus-1.2.14 )
 "
 
+# Migration of glib-genmarshal, glib-mkenums and gtester-report to a separate
+# python depending package, which can be buildtime depended in packages that
+# need these tools, without pulling in python at runtime.
+RDEPEND="${RDEPEND}
+	${PYTHON_DEPS}
+	>=dev-util/glib-utils-${PV}"
 PDEPEND="
 	dbus? ( gnome-base/dconf )
 	mime? ( x11-misc/shared-mime-info )

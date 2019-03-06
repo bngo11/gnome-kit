@@ -1,7 +1,7 @@
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="6"
-
+EAPI=6
 inherit gnome.org gnome2-utils meson vala xdg
 
 DESCRIPTION="A calculator application for GNOME"

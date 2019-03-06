@@ -1,7 +1,7 @@
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
-
 inherit gnome2 virtualx meson
 
 DESCRIPTION="GNOME 3 compositing window manager based on Clutter"
@@ -25,7 +25,7 @@ COMMON_DEPEND="
 	>=x11-libs/pango-1.30[introspection?]
 	>=x11-libs/cairo-1.14[X]
 	>=x11-libs/gtk+-3.19.8:3[X,introspection?]
-	>=dev-libs/glib-2.59.2:2[dbus]
+	>=dev-libs/glib-2.60.0:2[dbus]
 	>=media-libs/libcanberra-0.26[gtk3]
 	>=x11-libs/startup-notification-0.7
 	>=x11-libs/libXcomposite-0.2
@@ -63,7 +63,6 @@ COMMON_DEPEND="
 		>=dev-libs/wayland-protocols-1.16
 		>=media-libs/mesa-10.3[egl,gbm,wayland]
 		|| ( sys-auth/elogind sys-apps/systemd )
-		>=virtual/libgudev-232:=
 		>=virtual/libudev-232:=
 		x11-base/xorg-server[wayland]
 		x11-libs/libdrm:=
