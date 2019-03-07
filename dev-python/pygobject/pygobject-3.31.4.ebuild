@@ -1,3 +1,4 @@
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
@@ -35,7 +36,6 @@ DEPEND="${COMMON_DEPEND}
 	>=x11-libs/gdk-pixbuf-2.38.0:2[introspection]
 	>=x11-libs/gtk+-3.24.0:3[introspection]
 	x11-libs/pango[introspection]
-	python_targets_python2_7? ( dev-python/pyflakes[$(python_gen_usedep python2_7)] )
 "
 
 RDEPEND="${COMMON_DEPEND}

@@ -1,3 +1,4 @@
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
@@ -11,9 +12,9 @@ HOMEPAGE="https://git.gnome.org/browse/gnome-settings-daemon"
 
 LICENSE="GPL-2+"
 SLOT="0"
+IUSE="+cups debug elogind +networkmanager smartcard systemd test +udev wayland"
 KEYWORDS="*"
 
-IUSE="+cups debug elogind +networkmanager smartcard systemd test +udev wayland"
 REQUIRED_USE="
 	?? ( elogind systemd )
 	smartcard? ( udev )
