@@ -30,9 +30,12 @@ DEPEND="${RDEPEND}
 		dev-libs/dbus-glib
 		>=dev-libs/glib-2.26:2 )
 	>=media-gfx/graphviz-2.40.1
-	!dev-lang/vala:0.38
 "
 
 src_configure() {
-	gnome2_src_configure --disable-unversioned
+	# weasyprint enables generation of PDF from HTML
+	gnome2_src_configure \
+		--disable-unversioned \
+		VALAC=: \
+		WEASYPRINT=:
 }
