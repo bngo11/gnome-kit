@@ -4,7 +4,7 @@
 EAPI=6
 VALA_USE_DEPEND="vapigen"
 
-inherit gnome-meson vala
+inherit gnome2 meson vala
 
 DESCRIPTION="Fit falling blocks together"
 HOMEPAGE="https://wiki.gnome.org/Apps/Quadrapassel"
@@ -21,7 +21,7 @@ RDEPEND="
 	>=media-libs/clutter-gtk-0.91.6:1.0
 	>=media-libs/libcanberra-0.26[gtk3]
 	>=x11-libs/gtk+-3.12:3
-	>=dev-libs/libmanette-0.2
+	>=sys-libs/libmanette-0.2
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
@@ -33,6 +33,6 @@ DEPEND="${RDEPEND}
 "
 
 src_prepare() {
-	gnome-meson_src_prepare
+	gnome2_src_prepare
 	vala_src_prepare
 }
