@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_{5,6,7} )
 
 inherit gnome2 python-any-r1 virtualx
 
@@ -11,14 +11,14 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Logs"
 
 LICENSE="GPL-3+"
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+KEYWORDS="*"
 IUSE="test"
 
 RDEPEND="
 	>=dev-libs/glib-2.43.90:2
 	gnome-base/gsettings-desktop-schemas
 	sys-apps/systemd:=
-	>=x11-libs/gtk+-3.19.3:3
+	>=x11-libs/gtk+-3.22.15:3
 "
 DEPEND="${RDEPEND}
 	~app-text/docbook-xml-dtd-4.3

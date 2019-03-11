@@ -18,7 +18,7 @@ IUSE="fat gnome systemd"
 COMMON_DEPEND="
 	>=app-arch/xz-utils-5.0.5
 	>=app-crypt/libsecret-0.7
-	>=dev-libs/glib-2.31:2[dbus]
+	>=dev-libs/glib-2.60.0:2[dbus]
 	dev-libs/libpwquality
 	>=media-libs/libcanberra-0.1[gtk3]
 	>=media-libs/libdvdread-4.2.0
@@ -33,7 +33,7 @@ RDEPEND="${COMMON_DEPEND}
 	gnome? ( >=gnome-base/gnome-settings-daemon-3.8 )
 "
 DEPEND="${COMMON_DEPEND}
-	>=sys-devel/gettext-0.19.8
+	>=dev-util/intltool-0.50.2
 	dev-libs/appstream-glib
 	dev-libs/libxslt
 	virtual/pkgconfig

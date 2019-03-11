@@ -1,12 +1,12 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="6"
+EAPI=6
 PYTHON_COMPAT=( python{2_7,3_5,3_6,3_7} )
 
 inherit eutils virtualx python-r1 meson
 
-SRC_URI="https://download.gnome.org/sources/pygobject/3.31/pygobject-${PV}.tar.xz"
+SRC_URI="https://download.gnome.org/sources/pygobject/3.32/pygobject-${PV}.tar.xz"
 
 DESCRIPTION="GLib's GObject library bindings for Python"
 HOMEPAGE="https://wiki.gnome.org/Projects/PyGObject"

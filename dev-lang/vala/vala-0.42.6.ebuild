@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-inherit gnome2
+inherit autotools gnome2
 
 DESCRIPTION="Compiler for the GObject type system"
 HOMEPAGE="https://wiki.gnome.org/Projects/Vala"

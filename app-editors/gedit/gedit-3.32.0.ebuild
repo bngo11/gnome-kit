@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_{5,6,7} )
 VALA_MIN_API_VERSION="0.26"
 VALA_USE_DEPEND="vapigen"
 
-inherit gnome2 meson multilib python-single-r1 vala virtualx
+inherit gnome2 meson python-single-r1 vala virtualx
 
 DESCRIPTION="A text editor for the GNOME desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Gedit"
@@ -18,7 +18,8 @@ SLOT="0"
 IUSE="+introspection +python spell vala"
 REQUIRED_USE="python? ( introspection ${PYTHON_REQUIRED_USE} )"
 
-KEYWORDS="*"
+KEYWORDS="~alpha amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
+
 # X libs are not needed for OSX (aqua)
 COMMON_DEPEND="
 	>=dev-libs/libxml2-2.5.0:2
