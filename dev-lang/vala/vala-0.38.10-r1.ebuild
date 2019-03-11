@@ -30,15 +30,10 @@ DEPEND="${RDEPEND}
 		dev-libs/gobject-introspection:= )
 "
 
-src_prepare() {
-	# From GNOME:
-	# 	https://git.gnome.org/browse/vala/commit/?id=2b742fce82eb1326faaee3b2cc4ff993e701ef53
-	# 	https://git.gnome.org/browse/vala/commit/?id=c63247759dca09d1a81dce6bc2e2992746d7c996
-	eapply "${FILESDIR}"/${PN}-0.38.8-uncouple-valadoc.patch
-
-	eautoreconf
-	gnome2_src_prepare
-}
+PATCHES=(
+	# Add missing bits to make valadoc parallel installable
+	"${FILESDIR}"/vala-0.38-valadoc-doclets-data-parallel-installable.patch
+)
 
 src_configure() {
 	# bug 483134
@@ -49,4 +44,9 @@ src_configure() {
 		--disable-unversioned \
 		VALAC=: \
 		WEASYPRINT=:
+}
+
+src_install() {
+	default
+	find "${D}" -name "*.la" -delete || die
 }
