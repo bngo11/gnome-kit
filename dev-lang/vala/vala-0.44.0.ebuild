@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit gnome2
+inherit autotools gnome2
 
 DESCRIPTION="Compiler for the GObject type system"
 HOMEPAGE="https://wiki.gnome.org/Projects/Vala"
@@ -17,19 +17,24 @@ RDEPEND="
 	>=dev-libs/vala-common-${PV}
 "
 
-#TODO: slot install is a bit broken
 DEPEND="${RDEPEND}
 	!${CATEGORY}/${PN}:0
 	dev-libs/libxslt
 	sys-devel/flex
 	virtual/pkgconfig
 	virtual/yacc
+	>=media-gfx/graphviz-2.40.1
 	test? (
 		dev-libs/dbus-glib
-		>=dev-libs/glib-2.26:2 )
-	>=media-gfx/graphviz-2.40.1
+		>=dev-libs/glib-2.26:2
+		dev-libs/gobject-introspection )
 	!dev-lang/vala:0.38
 "
+
+PATCHES=(
+	# Add missing bits to make valadoc parallel installable
+	"${FILESDIR}"/vala-0.44-valadoc-doclets-data-parallel-installable.patch
+)
 
 src_configure() {
 	# weasyprint enables generation of PDF from HTML
@@ -37,4 +42,9 @@ src_configure() {
 		--disable-unversioned \
 		VALAC=: \
 		WEASYPRINT=:
+}
+
+src_install() {
+	default
+	find "${D}" -name "*.la" -delete || die
 }
