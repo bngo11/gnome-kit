@@ -122,14 +122,11 @@ src_prepare() {
 		strip_builddir SRC_SUBDIRS examples Makefile.{am,in}
 	fi
 
-	# gtk-3-24 branch at morning of 2019-02-07 - fribidi explicit linking, compiler warning fixes, small bugfixes
-	eapply "${FILESDIR}"/patches/3.24.5
-
 	# gtk-update-icon-cache is installed by dev-util/gtk-update-icon-cache
-	eapply "${FILESDIR}"/${PN}-3.22.2-update-icon-cache.patch
+	eapply "${FILESDIR}"/${PN}-3.24.7-update-icon-cache.patch
 
 	# Fix broken autotools logic
-	eapply "${FILESDIR}"/${PN}-3.22.20-libcloudproviders-automagic.patch
+	eapply "${FILESDIR}"/${PN}-3.24.7-libcloudproviders-automagic.patch
 
 	# call eapply_user (implicitly) before eautoreconf
 	gnome2_src_prepare
