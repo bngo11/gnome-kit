@@ -93,10 +93,10 @@ DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 "
 
-# PATCHES=(
-# 	"${FILESDIR}/gnome-shell-3.32.0-improve-motd-handling.patch"
-# 	"${FILESDIR}/gnome-shell-3.32.0-improve-screen-blanking.patch"
-# )
+PATCHES=(
+	"${FILESDIR}/gnome-shell-3.32.0-improve-motd-handling.patch"
+	"${FILESDIR}/gnome-shell-3.32.0-improve-screen-blanking.patch"
+)
 
 src_prepare() {
 	gnome2_src_prepare

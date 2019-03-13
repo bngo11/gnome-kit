@@ -24,6 +24,7 @@ RDEPEND="
 	cairo? ( x11-libs/cairo[X] )
 	gtk? ( x11-libs/gtk+:3 )
 "
+
 DEPEND="${RDEPEND}
 	gnome-base/gnome-common
 	sys-devel/gettext
