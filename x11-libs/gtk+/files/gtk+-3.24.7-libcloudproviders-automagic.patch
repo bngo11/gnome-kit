@@ -12,7 +12,7 @@ diff --git a/configure.ac b/configure.ac
 index 24110386b4..cebe66c2e5 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -349,8 +349,10 @@ AC_ARG_ENABLE(mir-backend,
+@@ -350,8 +350,10 @@ AC_ARG_ENABLE(mir-backend,
  
  AC_ARG_ENABLE(cloudproviders,
                [AS_HELP_STRING([--enable-cloudproviders],
@@ -25,7 +25,7 @@ index 24110386b4..cebe66c2e5 100644
  
  if test -z "$backend_set"; then
    if test "$platform_win32" = yes; then
-@@ -1350,17 +1352,15 @@ fi
+@@ -1361,17 +1363,15 @@ fi
  # Check for libcloudproviders
  
  CLOUDPROVIDER_PACKAGES=""
