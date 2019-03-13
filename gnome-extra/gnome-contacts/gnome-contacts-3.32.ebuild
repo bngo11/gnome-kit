@@ -48,6 +48,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libxslt
 	>=dev-util/intltool-0.40
 	>=sys-devel/gettext-0.17
+	>=dev-libs/libhandy-0.0.9
 	virtual/pkgconfig
 "
 
