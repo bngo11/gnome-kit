@@ -1,8 +1,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
+VALA_USE_DEPEND="vapigen"
 
-inherit gnome2 meson
+inherit gnome2 vala meson
 
 DESCRIPTION="JSON RPC GLIB"
 HOMEPAGE="https://wiki.gnome.org/Projects/JsonGlib"
@@ -25,3 +26,8 @@ DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.18
 	virtual/pkgconfig
 "
+
+src_prepare() {
+	use vala && vala_src_prepare
+	gnome2_src_prepare
+}

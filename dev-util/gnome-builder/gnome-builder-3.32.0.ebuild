@@ -16,7 +16,7 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Builder"
 LICENSE="GPL-3+ GPL-2+ LGPL-3+ LGPL-2+ MIT CC-BY-SA-3.0 CC0-1.0"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="clang +devhelp doc +git gtk-doc sysprof vala webkit"
+IUSE="clang +devhelp docs +git sysprof +vala webkit"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 # When bumping, pay attention to all the included plugins/*/meson.build (and other) build files and the requirements within.
@@ -37,7 +37,7 @@ LIBGIT_DEPS="
 "
 # TODO: Handle llvm slots via llvm.eclass; see plugins/clang/meson.build
 RDEPEND="
-	>=dev-libs/libdazzle-3.28.0[introspection,vala?]
+	>=dev-libs/libdazzle-3.28.0[introspection]
 	>=dev-libs/glib-2.56.0:2
 	>=x11-libs/gtk+-3.22.26:3[introspection]
 	>=x11-libs/gtksourceview-4.0.0:4[introspection]
@@ -50,7 +50,7 @@ RDEPEND="
 	>=dev-libs/libxml2-2.9.0
 	git? ( ${LIBGIT_DEPS} )
 	dev-libs/libpcre:3
-	webkit? ( >=net-libs/webkit-gtk-2.12.0:4=[introspection] )
+	>=net-libs/webkit-gtk-2.12.0:4=[introspection]
 
 	>=dev-libs/gobject-introspection-1.48.0:=
 	>=dev-python/pygobject-3.22.0:3[${PYTHON_USEDEP}]
@@ -72,7 +72,7 @@ RDEPEND="
 # desktop-file-utils required for tests, but we have it in deptree for xdg update-desktop-database anyway, so be explicit and unconditional
 # appstream-glib needed for appdata.xml gettext translation and validation of it with appstream-util with FEATURES=test
 DEPEND="${RDEPEND}
-	doc? ( dev-python/sphinx )
+	docs? ( dev-python/sphinx )
 	dev-libs/appstream-glib
 	dev-util/desktop-file-utils
 	>=sys-devel/gettext-0.19.8
@@ -119,24 +119,18 @@ src_prepare() {
 
 src_configure() {
 	local emesonargs=(
-		-Denable_tracing=false
-		-Denable_profiling=false # not passing -pg to CFLAGS
-		-Dwith_channel=other
-		-Dwith_editorconfig=true # needs libpcre
-		$(meson_use webkit with_webkit)
-		$(meson_use vala with_vapi)
-		$(meson_use doc with_help)
-		$(meson_use gtk-doc with_docs)
-
-		$(meson_use clang with_clang)
-		$(meson_use devhelp with_devhelp)
-		-Dwith_deviced=false
-		-Dwith_flatpak=false
-		$(meson_use git with_git)
-		$(meson_use webkit with_html_preview)
-		-Dwith_spellcheck=false # TODO: requires enchant-2
-		$(meson_use sysprof with_sysprof)
-		$(meson_use vala with_vala_pack)
+		-Dtracing=false
+		-Dprofiling=false # not passing -pg to CFLAGS
+		-Dchannel=other
+		$(meson_use vala plugin_vala)
+		$(meson_use docs)
+		$(meson_use clang plugin_clang)
+		$(meson_use devhelp plugin_devhelp)
+		-Dplugin_deviced=false
+		-Dplugin_flatpak=false
+		$(meson_use git plugin_git)
+		$(meson_use webkit plugin_html_preview)
+		$(meson_use sysprof plugin_sysprof)
 	)
 	meson_src_configure
 }
