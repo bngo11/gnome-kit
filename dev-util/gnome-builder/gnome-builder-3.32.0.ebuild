@@ -137,7 +137,7 @@ src_configure() {
 
 src_install() {
 	meson_src_install
-	if use doc; then
+	if use docs; then
 		rm "${ED}"/usr/share/doc/gnome-builder/en/.buildinfo || die
 		rm "${ED}"/usr/share/doc/gnome-builder/en/objects.inv || die
 		rm -r "${ED}"/usr/share/doc/gnome-builder/en/.doctrees || die
