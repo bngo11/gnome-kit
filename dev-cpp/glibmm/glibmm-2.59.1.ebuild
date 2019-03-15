@@ -2,7 +2,7 @@
 
 EAPI="6"
 
-inherit gnome2 multilib-minimal
+inherit gnome2
 
 DESCRIPTION="C++ interface for glib2"
 HOMEPAGE="https://www.gtkmm.org"
@@ -14,9 +14,8 @@ KEYWORDS="*"
 IUSE="doc debug test"
 
 RDEPEND="
-	dev-libs/libsigc++:3=[${MULTILIB_USEDEP}]
-	>=dev-libs/libsigc++-2.99.0:3[${MULTILIB_USEDEP}]
-	>=dev-libs/glib-2.50.0:2[${MULTILIB_USEDEP}]
+	>=dev-libs/libsigc++-2.99.0:3
+	>=dev-libs/glib-2.50.0:2
 "
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
