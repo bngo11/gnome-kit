@@ -42,7 +42,7 @@ RDEPEND="
 	>=gnome-extra/gnome-user-docs-3.28.2
 	>=gnome-extra/yelp-3.28.1
 
-	>=x11-themes/adwaita-icon-theme-$(get_version_component_range 1-2)
+	>=x11-themes/adwaita-icon-theme-3.31.91
 	>=x11-themes/gnome-themes-standard-3.22
 
 	bluetooth? ( >=net-wireless/gnome-bluetooth-3.28.2 )
