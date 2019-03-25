@@ -22,7 +22,7 @@ RDEPEND="
 	>=gnome-base/gnome-core-libs-${PV}[cups?]
 	>=gnome-base/gnome-core-apps-${PV}[cups?,bluetooth?,cdr?]
 
-	>=gnome-base/gdm-3.8.0
+	>=gnome-base/gdm-${PV}
 
 	>=x11-wm/mutter-3.30.0
 	>=gnome-base/gnome-shell-3.30.0[bluetooth?]
@@ -43,7 +43,7 @@ RDEPEND="
 
 DEPEND=""
 
-PDEPEND=">=gnome-base/gvfs-1.34[udisks]"
+PDEPEND=">=gnome-base/gvfs-1.40.0[udisks]"
 
 pkg_postinst() {
 	# Remember people where to find our project information
