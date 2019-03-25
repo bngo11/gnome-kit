@@ -72,8 +72,7 @@ DEPEND="${CDEPEND}
 	nls? ( sys-devel/gettext )
 	unicode? ( app-i18n/unicode-data )"
 
-PATCHES=( "${FILESDIR}/${P}-gdk-wayland.patch"
-          "${FILESDIR}/${P}-conditional.patch" )
+PATCHES=( "${FILESDIR}/${PN}-1.5.19-conditional.patch" )
 
 src_prepare() {
 	vala_src_prepare --ignore-use
