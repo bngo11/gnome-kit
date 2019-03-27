@@ -21,6 +21,7 @@ COMMON_DEPEND="
 	>=dev-libs/glib-2.56.0
 	dev-libs/libgudev
 	dev-libs/libevdev
+	>=dev-lang/vala-0.44
 "
 DEPEND="${COMMON_DEPEND}
 	${vala_depend}

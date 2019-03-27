@@ -28,7 +28,8 @@ RDEPEND="${PYTHON_DEPS}
 	>=media-gfx/exiv2-0.21:0=
 	introspection? ( dev-libs/gobject-introspection:= )"
 DEPEND="${RDEPEND}
-	virtual/pkgconfig"
+	virtual/pkgconfig
+	>=dev-lang/vala-0.44"
 
 src_prepare() {
 	default
