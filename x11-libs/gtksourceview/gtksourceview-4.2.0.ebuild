@@ -19,6 +19,7 @@ REQUIRED_USE="vala? ( introspection )"
 KEYWORDS="*"
 
 RDEPEND="
+	!x11-libs/gtksourceview:4.0
 	>=dev-libs/glib-2.48:2
 	>=dev-libs/libxml2-2.6:2
 	>=x11-libs/gtk+-3.20:3[introspection?]

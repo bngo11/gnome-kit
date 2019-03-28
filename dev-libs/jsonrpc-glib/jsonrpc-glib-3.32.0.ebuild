@@ -2,7 +2,7 @@
 
 EAPI="6"
 
-inherit gnome2 meson
+inherit gnome2 meson vala
 
 DESCRIPTION="JSON RPC GLIB"
 HOMEPAGE="https://wiki.gnome.org/Projects/JsonGlib"
@@ -25,3 +25,8 @@ DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.18
 	virtual/pkgconfig
 "
+
+src_prepare() {
+	default
+	vala_src_prepare
+}
