@@ -1689,7 +1689,6 @@ Subject: [PATCH 12/16] Restore translations for setting a title and
  po/as.po          | 16 ++++++++--------
  po/ast.po         |  8 ++++----
  po/az.po          |  8 ++++----
- po/be.po          |  3 +++
  po/be@latin.po    |  8 ++++----
  po/bg.po          |  9 +++++++++
  po/bn.po          |  8 ++++----
@@ -1700,7 +1699,6 @@ Subject: [PATCH 12/16] Restore translations for setting a title and
  po/ca@valencia.po | 12 ++++++++++++
  po/cs.po          | 12 ++++++++++++
  po/cy.po          |  8 ++++----
- po/da.po          | 11 +++++++++++
  po/de.po          | 12 ++++++++++++
  po/dz.po          |  8 ++++----
  po/el.po          | 15 +++++++++------
@@ -1710,7 +1708,6 @@ Subject: [PATCH 12/16] Restore translations for setting a title and
  po/eo.po          |  8 ++++----
  po/es.po          | 16 ++++++++--------
  po/et.po          |  3 +++
- po/eu.po          | 16 ++++++++--------
  po/fa.po          | 15 +++++++++------
  po/fi.po          | 12 ++++++++++++
  po/fr.po          | 12 ++++++++++++
@@ -1976,17 +1973,6 @@ index 586c1e4d827b..4bd846797101 100644
  
  #: ../src/gnome-terminal.glade2.h:103
  msgid "_Update login records when command is launched"
-diff --git a/po/be.po b/po/be.po
-index ce07d47995ca..3c65f9090ef4 100644
---- a/po/be.po
-+++ b/po/be.po
-@@ -2392,3 +2392,6 @@ msgstr "_Закрыць акно"
- 
- #~ msgid "_Set Title…"
- #~ msgstr "Прызначыць _загаловак..."
-+
-+msgid "Transparent background"
-+msgstr "Празрысты фон"
 diff --git a/po/be@latin.po b/po/be@latin.po
 index 82ef0664ae1e..27e9877f96e8 100644
 --- a/po/be@latin.po
@@ -2217,25 +2203,6 @@ index 644df82363f1..cd862feb50c0 100644
  
  #: ../src/profile-preferences.glade.h:74
  msgid "_Update login records when command is launched"
-diff --git a/po/da.po b/po/da.po
-index 65cfb20d9ad3..8c5c97c7465a 100644
---- a/po/da.po
-+++ b/po/da.po
-@@ -2325,3 +2325,14 @@ msgstr ""
- msgid "C_lose Window"
- msgstr "_Luk vindue"
- 
-+msgid "Title"
-+msgstr "Titel"
-+
-+msgid "_Title:"
-+msgstr "_Titel:"
-+
-+msgid "Set Title"
-+msgstr "Sæt titel"
-+
-+msgid "Transparent background"
-+msgstr "Gennemsigtig baggrund"
 diff --git a/po/de.po b/po/de.po
 index 79f42cfe7f4c..8d0bfcd53fe2 100644
 --- a/po/de.po
@@ -2495,48 +2462,6 @@ index 4b1c2a7c67e4..770761168806 100644
 +
 +msgid "Transparent background"
 +msgstr "Läbipaistev taust"
-diff --git a/po/eu.po b/po/eu.po
-index f3aab7879a6f..543a121f6aac 100644
---- a/po/eu.po
-+++ b/po/eu.po
-@@ -2411,11 +2411,11 @@ msgstr "It_xi leihoa"
- #~ msgid "Default size:"
- #~ msgstr "Tamaina lehenetsia:"
- 
--#~ msgid "Title"
--#~ msgstr "Titulua"
-+msgid "Title"
-+msgstr "Titulua"
- 
--#~ msgid "_Title:"
--#~ msgstr "_Titulua:"
-+msgid "_Title:"
-+msgstr "_Titulua:"
- 
- #~ msgid "Title and Command"
- #~ msgstr "Titulua eta komandoa"
-@@ -2423,8 +2423,8 @@ msgstr "It_xi leihoa"
- #~ msgid "_Unlimited"
- #~ msgstr "_Mugagabea"
- 
--#~ msgid "Set Title"
--#~ msgstr "Ezarri titulua"
-+msgid "Set Title"
-+msgstr "Ezarri titulua"
- 
- #~ msgid "Current Locale"
- #~ msgstr "Uneko hizkuntza-ezarpena"
-@@ -3211,8 +3211,8 @@ msgstr "It_xi leihoa"
- #~ msgid "_Solid color"
- #~ msgstr "_Kolore solidoa"
- 
--#~ msgid "_Transparent background"
--#~ msgstr "_Atzeko plano gardena"
-+msgid "Transparent background"
-+msgstr "Atzeko plano gardena"
- 
- #~ msgid ""
- #~ "You already have a profile called “%s”. Do you want to create another "
 diff --git a/po/fa.po b/po/fa.po
 index 8b0ca26eebe5..6079d0c40a1d 100644
 --- a/po/fa.po

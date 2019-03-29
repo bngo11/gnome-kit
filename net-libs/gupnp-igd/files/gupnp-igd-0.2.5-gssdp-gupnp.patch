@@ -94,3 +94,14 @@
  GUPnPIgd_1_0_gir_CFLAGS = -I$(srcdir) -I$(top_srcdir)
  @HAVE_INTROSPECTION_TRUE@girdir = $(INTROSPECTION_GIRDIR)
  @HAVE_INTROSPECTION_TRUE@dist_gir_DATA = $(INTROSPECTION_GIRS)
+--- a/gupnp-igd-1.0.pc.in	2009-05-04 17:40:53.000000000 -0500
++++ b/gupnp-igd-1.0.pc.in	2019-03-28 18:06:28.894683776 -0500
+@@ -5,7 +5,7 @@
+ 
+ Name: gupnp-igd-1.0
+ Description: GUPnP Simple IGD library
+-Requires: gupnp-1.0
++Requires: gupnp-1.2
+ Version: @VERSION@
+ Libs: -L${libdir} -lgupnp-igd-1.0
+ Cflags: -I${includedir}/gupnp-igd-1.0

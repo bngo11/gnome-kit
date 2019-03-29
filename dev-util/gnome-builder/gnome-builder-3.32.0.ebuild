@@ -37,6 +37,7 @@ LIBGIT_DEPS="
 "
 # TODO: Handle llvm slots via llvm.eclass; see plugins/clang/meson.build
 RDEPEND="
+	>=sys-devel/gcc-8.2.1
 	>=dev-libs/libdazzle-3.28.0[introspection]
 	>=dev-libs/glib-2.56.0:2
 	>=x11-libs/gtk+-3.22.26:3[introspection]
