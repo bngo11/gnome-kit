@@ -117,6 +117,8 @@ src_prepare() {
 	sed -i -e "s/install_dir : get_option('bindir')/install_dir : '' /" gio/gdbus-2.0/codegen/meson.build
 	sed -i -e "s/[, ]*'gdbus-codegen.*'[,]*//" docs/reference/gio/meson.build
 
+	sed -i -e "s/'python3'/'python'/" meson.build
+
 	# Tarball doesn't come with gtk-doc.make and we can't unconditionally depend on dev-util/gtk-doc due
 	# to circular deps during bootstramp. If actually not building gtk-doc, an almost empty file will do
 	# fine as well - this is also what upstream autogen.sh does if gtkdocize is not found. If gtk-doc is
