@@ -11,7 +11,7 @@ HOMEPAGE="https://wiki.gnome.org/Projects/Tracker"
 
 LICENSE="GPL-2+ LGPL-2.1+"
 SLOT="0"
-IUSE="cue exif ffmpeg flac gif gsf +gstreamer iptc +iso +jpeg libav +pdf +playlist raw +rss seccomp test +taglib +tiff upower +vorbis +xml xmp xps"
+IUSE="cue exif ffmpeg flac gif gsf +gstreamer iptc +iso +jpeg libav +pdf +playlist raw +rss test +taglib +tiff upower +vorbis +xml xmp xps"
 
 REQUIRED_USE="cue? ( gstreamer )" # cue is currently only supported via gstreamer, not ffmpeg/libav
 
@@ -42,7 +42,7 @@ RDEPEND="
 	jpeg? ( virtual/jpeg:0 )
 	iso? ( >=sys-libs/libosinfo-0.2.10 )
 	>=media-libs/libpng-1.2:0=
-	seccomp? ( >=sys-libs/libseccomp-2.0 )
+	>=sys-libs/libseccomp-2.0
 	tiff? ( media-libs/tiff:0 )
 	xml? ( >=dev-libs/libxml2-2.6 )
 	vorbis? ( >=media-libs/libvorbis-0.22 )
