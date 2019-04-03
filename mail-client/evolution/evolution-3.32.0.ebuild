@@ -98,6 +98,7 @@ file from /usr/share/applications if you use a different browser)."
 
 src_configure() {
 	local mycmakeargs=(
+		-DWITH_OPENLDAP=$(usex ldap ON OFF)
 		-DENABLE_YTNEF=OFF
 		-DENABLE_PST_IMPORT=OFF
 		-DENABLE_GTKSPELL=$(usex spell ON OFF)
