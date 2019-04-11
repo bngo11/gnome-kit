@@ -5,7 +5,7 @@ EAPI=6
 
 PYTHON_COMPAT=( python{3_5,3_6,3_7} )
 
-inherit eutils python-r1 toolchain-funcs versionator xdg-utils meson vala
+inherit meson python-r1 vala xdg-utils versionator
 
 MY_PV=$(get_version_component_range 1-2)
 
@@ -15,23 +15,54 @@ SRC_URI="mirror://gnome/sources/${PN}/${MY_PV}/${P}.tar.xz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="introspection python static-libs test"
+KEYWORDS="*"
+IUSE="gtk-doc +introspection python static-libs test +vala"
 
 REQUIRED_USE="
 	python? ( introspection ${PYTHON_REQUIRED_USE} )
-	test? ( python )
+	test? ( python introspection )
+	vala? ( introspection )
 "
 
 RDEPEND="${PYTHON_DEPS}
-	>=dev-libs/glib-2.26.1:2
+	>=dev-libs/glib-2.38.0:2
 	>=media-gfx/exiv2-0.21:0=
-	introspection? ( dev-libs/gobject-introspection:= )"
+	introspection? ( >=dev-libs/gobject-introspection-1.54:= )"
+
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
-	>=dev-lang/vala-0.44"
+	gtk-doc? ( dev-util/gtk-doc )
+	test? (
+		dev-python/pygobject:3
+		media-gfx/exiv2[xmp]
+	)
+	vala? ( $(vala_depend) )"
 
 src_prepare() {
+	xdg_environment_reeset
+	use vala && vala_src_prepare
 	default
-	vala_src_prepare
+}
+
+src_configure() {
+	local emesonargs=(
+		$(meson_use introspection)
+		$(meson_use vala vapi)
+		$(meson_use gtk-doc gtk_doc)
+		# prevents installation of python modules (uses install_data from meson
+		# which does not optimize the modules
+		-Dpython2-girdir=no
+		-Dpython3-girdir=no
+	)
+
+	meson_src_configure
+}
+
+src_install() {
+	meson_src_install
+
+	if use python ; then
+		python_moduleinto gi/overrides/
+		python_foreach_impl python_domodule GExiv2.py
+	fi
 }

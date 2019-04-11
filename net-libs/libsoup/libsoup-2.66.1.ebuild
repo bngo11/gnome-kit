@@ -15,7 +15,7 @@ LICENSE="LGPL-2+"
 SLOT="2.4"
 KEYWORDS="*"
 
-IUSE="gssapi +introspection samba vala"
+IUSE="gssapi +introspection samba +vala"
 REQUIRED_USE="vala? ( introspection )"
 
 RDEPEND="
