@@ -25,16 +25,18 @@ DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 "
 
+PATCHES=( "${FILESDIR}/${P}-glibmm-2.61.patch" )
+
 pkg_setup() {
 	export CFLAGS="-std=c++17 $CFLAGS"
 	export CXXFLAGS="-std=c++17 $CXXFLAGS"
 }
 
-multilib_src_configure() {
+src_configure() {
 	ECONF_SOURCE="${S}" gnome2_src_configure \
-		$(multilib_native_use_enable doc documentation)
+		$(use_enable doc documentation)
 }
 
-multilib_src_install() {
+src_install() {
 	gnome2_src_install
 }
