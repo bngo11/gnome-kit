@@ -82,6 +82,8 @@ RDEPEND="${COMMON_DEPEND}
 	!x11-misc/expocity
 "
 
+PATCHES=( "${FILESDIR}/${P}-launch_context.patch" )
+
 src_prepare() {
 	if use elogind; then
 		eapply "${FILESDIR}"/${PN}-3.32.0-support-elogind.patch
