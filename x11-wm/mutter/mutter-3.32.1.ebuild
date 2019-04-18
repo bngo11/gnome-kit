@@ -67,6 +67,7 @@ COMMON_DEPEND="
 		>=virtual/libudev-232:=
 		x11-base/xorg-server[wayland]
 		x11-libs/libdrm:=
+		dev-libs/egl-wayland
 	)
 	media-video/pipewire
 "
@@ -82,11 +83,9 @@ RDEPEND="${COMMON_DEPEND}
 	!x11-misc/expocity
 "
 
-PATCHES=( "${FILESDIR}/${P}-launch_context.patch" )
-
 src_prepare() {
 	if use elogind; then
-		eapply "${FILESDIR}"/${PN}-3.32.0-support-elogind.patch
+		eapply "${FILESDIR}"/${P}-support-elogind.patch
 	fi
 	default
 }
@@ -103,7 +102,7 @@ src_configure() {
 		$(meson_use introspection)
 		$(meson_use wayland)
 		$(meson_use wayland egl-device)
-		# $(meson_use wayland wayland_eglstream)
+		$(meson_use wayland wayland_eglstream)
 		$(meson_use wayland native-backend)
 		$(meson_use udev)
 		$(meson_use input_devices_wacom libwacom)
