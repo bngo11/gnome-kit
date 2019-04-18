@@ -11,7 +11,7 @@ LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE="elogind +gles2 input_devices_wacom +introspection udev wayland"
+IUSE="elogind +gles2 input_devices_wacom +introspection nvidia udev wayland"
 REQUIRED_USE="
 	wayland? ( elogind )
 "
@@ -67,7 +67,7 @@ COMMON_DEPEND="
 		>=virtual/libudev-232:=
 		x11-base/xorg-server[wayland]
 		x11-libs/libdrm:=
-		dev-libs/egl-wayland
+		nvidia? ( dev-libs/egl-wayland )
 	)
 	media-video/pipewire
 "
@@ -102,7 +102,7 @@ src_configure() {
 		$(meson_use introspection)
 		$(meson_use wayland)
 		$(meson_use wayland egl-device)
-		$(meson_use wayland wayland_eglstream)
+		$(meson_use nvidia wayland_eglstream)
 		$(meson_use wayland native-backend)
 		$(meson_use udev)
 		$(meson_use input_devices_wacom libwacom)
