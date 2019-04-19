@@ -96,6 +96,7 @@ DEPEND="${COMMON_DEPEND}
 PATCHES=(
 	"${FILESDIR}/gnome-shell-3.32.0-improve-motd-handling.patch"
 	"${FILESDIR}/gnome-shell-3.32.0-improve-screen-blanking.patch"
+	"${FILESDIR}/${P}-nvidia-background-workaround.patch"
 )
 
 src_prepare() {

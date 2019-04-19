@@ -103,7 +103,7 @@ src_configure() {
 		$(meson_use wayland)
 		$(meson_use wayland egl-device)
 		$(meson_use nvidia wayland_eglstream)
-		$(meson_use wayland native-backend)
+		$(meson_use gles2 native-backend)
 		$(meson_use udev)
 		$(meson_use input_devices_wacom libwacom)
 	)
