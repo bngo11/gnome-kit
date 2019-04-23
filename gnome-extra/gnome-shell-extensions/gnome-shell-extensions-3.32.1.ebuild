@@ -71,7 +71,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	meson_pkg_postinst
+	gnome2_pkg_postinst
 
 	ebegin "Updating list of installed extensions"
 	eselect gnome-shell-extensions update
