@@ -83,12 +83,8 @@ RDEPEND="${COMMON_DEPEND}
 	!x11-misc/expocity
 "
 
-src_prepare() {
-	if use elogind; then
-		eapply "${FILESDIR}"/${P}-support-elogind.patch
-	fi
-	default
-}
+PATCHES=( "${FILESDIR}/${P}-add-get-color-info.patch"
+          "${FILESDIR}/${P}-support-eudev.patch" )
 
 src_configure() {
 	sed -i "/'-Werror=redundant-decls',/d" "${S}"/meson.build || die "sed failed"
@@ -98,12 +94,13 @@ src_configure() {
 		-Degl=true
 		-Dglx=true
 		-Dsm=true
+		-Dremote_desktop=true
 		$(meson_use gles2)
 		$(meson_use introspection)
 		$(meson_use wayland)
-		$(meson_use wayland egl-device)
+		$(meson_use wayland egl_device)
 		$(meson_use nvidia wayland_eglstream)
-		$(meson_use gles2 native-backend)
+		$(meson_use gles2 native_backend)
 		$(meson_use udev)
 		$(meson_use input_devices_wacom libwacom)
 	)
