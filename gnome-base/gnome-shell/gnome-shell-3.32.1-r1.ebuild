@@ -115,7 +115,6 @@ src_configure() {
 	local emesonargs=(
 		-Dsystemd=$(usex systemd true false)
 		-Dnetworkmanager=$(usex networkmanager true false)
-		-DBROWSER_PLUGIN_DIR="${EPREFIX}"/usr/$(get_libdir)/nsbrowser/plugins
 	)
 
 	meson_src_configure
