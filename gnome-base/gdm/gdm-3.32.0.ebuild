@@ -59,7 +59,7 @@ COMMON_DEPEND="
 	systemd? ( >=sys-apps/systemd-186:0=[pam] )
 	elogind? ( sys-auth/elogind )
 
-	sys-auth/pambase[elogind?,systemd?]
+	sys-auth/pambase
 
 	audit? ( sys-process/audit )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.12:= )
