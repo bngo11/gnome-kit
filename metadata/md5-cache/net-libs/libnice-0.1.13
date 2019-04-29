@@ -1,5 +1,5 @@
 DEFINED_PHASES=compile configure install prepare test
-DEPEND=>=dev-libs/glib-2.34.3:2[-mgorny(-)] introspection? ( >=dev-libs/gobject-introspection-1.30.0:= ) upnp? ( >=net-libs/gupnp-igd-0.2.4:=[-mgorny(-)] ) dev-util/gtk-doc-am >=virtual/pkgconfig-0-r1[-mgorny(-)] >=app-portage/elt-patches-20170317 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.15:1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+DEPEND=>=dev-libs/glib-2.34.3:2[-mgorny(-)] introspection? ( >=dev-libs/gobject-introspection-1.30.0:= ) upnp? ( >=net-libs/gupnp-igd-0.2.4:=[-mgorny(-)] ) dev-util/gtk-doc-am >=virtual/pkgconfig-0-r1[-mgorny(-)] >=app-portage/elt-patches-20170815 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.16.1:1.16 >=sys-devel/automake-1.15.1:1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 DESCRIPTION=An implementation of the Interactice Connectivity Establishment standard (ICE)
 EAPI=5
 HOMEPAGE=https://nice.freedesktop.org/wiki/
@@ -10,5 +10,5 @@ RDEPEND=>=dev-libs/glib-2.34.3:2[-mgorny(-)] introspection? ( >=dev-libs/gobject
 RESTRICT=test
 SLOT=0
 SRC_URI=https://nice.freedesktop.org/releases/libnice-0.1.13.tar.gz
-_eclasses_=autotools	07e71b3b5690738ef7e8bc097077e00c	eutils	b83a2420b796f7c6eff682679d08fe25	libtool	e32ea84bf82cf8987965b574672dba93	multibuild	742139c87a9fa3766f0c2b155e5522bf	multilib	97f470f374f2e94ccab04a2fb21d811e	multilib-build	831d058a5d94147eada61f98f7c4cf81	multilib-minimal	0224dee31c0f98405d572e14ad6dee65	toolchain-funcs	6eb35f81556258a4bc9182ad3dfd58ee	xdg-utils	e2b2bd56125ce8cf59ce30c642b59d48
+_eclasses_=autotools	1bf086cdd7356f5c9a4acd9727bd2065	desktop	b1d22ac8bdd4679ab79c71aca235009d	epatch	a1bf4756dba418a7238f3be0cb010c54	estack	43ddf5aaffa7a8d0482df54d25a66a1f	eutils	6e6c2737b59a4b982de6fb3ecefd87f8	libtool	f143db5a74ccd9ca28c1234deffede96	ltprune	08f9e1d9ee0af8f5d9a7854efbcd8c0e	multibuild	40fe59465edacd730c644ec2bc197809	multilib	b2f01ad412baf81650c23fcf0975fa33	multilib-build	68f3f04096539a1b4ccbddc19c744f4a	multilib-minimal	8bddda43703ba94d8341f4e247f97566	preserve-libs	ef207dc62baddfddfd39a164d9797648	toolchain-funcs	f164325a2cdb5b3ea39311d483988861	vcs-clean	2a0f74a496fa2b1552c4f3398258b7bf	xdg-utils	93b2dfbb00a09161e1e7f6360c0f7f6b
 _md5_=0570e6bd92e2af155bd137b67e3d3c9c
